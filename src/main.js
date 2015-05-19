@@ -190,7 +190,7 @@ function resetYIndices() {
 }
 
 
-function bindToMediaQueryLists(options) {
+function bindToMediaQueryList(options) {
   var mqlListener = function(mql) {
     if (mql.matches) {
       columnCount = options.columns;
@@ -213,7 +213,7 @@ function init(options) {
   if (options.mediaQueries && window.matchMedia) {
     var i = options.mediaQueries.length;
     while (i--) {
-      bindToMediaQueryLists(options.mediaQueries[i]);
+      bindToMediaQueryList(options.mediaQueries[i]);
     }
   }
 
