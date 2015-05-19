@@ -22,19 +22,8 @@ function append(items) {
     columns.push(document.createDocumentFragment());
   }
 
-  var count = items.length,
-      index,
-      item;
-
   updateYIndices();
-
-  for (var j = 0; j < count; j++) {
-    index = getColumnIndex();
-    item = items[j];
-
-    yIndices[index] += heights[j] + 20;
-    columns[index].appendChild(item);
-  }
+  distributeItemsToColumns(items, columns, heights);
 
   for (var k = 0; k < columnCount; k++) {
     container.children[k].appendChild(columns[k]);
@@ -58,19 +47,9 @@ function prepend(items) {
   resetYIndices();
   removeColumns();
 
-  var columns = createColumns(columnCount),
-      count = items.length,
-      index,
-      item;
+  var columns = createColumns(columnCount);
 
-  for (var i = 0; i < count; i++) {
-    index = getColumnIndex();
-    item = items[i];
-
-    yIndices[index] += heights[i] + 20;
-    columns.childNodes[index].appendChild(item);
-  }
-
+  distributeItemsToColumns(items, columns.childNodes, heights);
   container.appendChild(columns);
 
   $items = items;
@@ -98,25 +77,29 @@ function update(numColumns) {
     columnCount = numColumns;
   }
 
-  var columns = createColumns(columnCount),
-      count = $items.length,
-      index,
-      item;
+  var columns = createColumns(columnCount);
 
-  for (var i = 0; i < count; i++) {
-    index = getColumnIndex();
-    item = $items[i];
-
-    yIndices[index] += heights[i] + 20;
-    columns.childNodes[index].appendChild(item);
-  }
-
+  distributeItemsToColumns($items, columns.childNodes, heights);
   container.appendChild(columns);
 
   var t2 = Date.now();
   console.log(t1, ':', t2, ':', t2 - t1);
 }
 
+
+function distributeItemsToColumns(items, columns, heights) {
+  var count = items.length,
+      index,
+      item;
+
+  for (var i = 0; i < count; i++) {
+    index = getColumnIndex();
+    item = items[i];
+
+    yIndices[index] += heights[i] + 20;
+    columns[index].appendChild(item);
+  }
+}
 
 
 function createColumns(count) {
