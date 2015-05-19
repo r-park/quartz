@@ -1,0 +1,71 @@
+$grid-max-width: 930px !default;
+
+@import "../node_modules/sass-lib/src/main";
+
+@media screen and (max-width: 1024px) {}
+
+
+.container {
+  @include grid-row;
+  margin-top: 60px;
+  margin-bottom: 300px;
+  background: #f6f6f6;
+}
+
+
+.column {
+  @include grid-column;
+  width: grid-column-width(1, 1);
+  //min-height: 300px;
+
+  @include media-query($max: 640) {
+    width: grid-column-width(1, 1);
+  }
+
+  @include media-query(640, 768px) {
+    width: grid-column-width(1, 2);
+  }
+
+  @include media-query($min: 768px) {
+    width: grid-column-width(1, 3);
+  }
+}
+
+
+.item {
+  margin-bottom: 20px;
+  background: #c00;
+}
+
+
+.item {
+  border: 1px solid #666;
+  padding: 18px;
+  color: #fff;
+  background: #333;
+
+  &.w1 {
+    //width: 180px;
+  }
+
+  &.w2 {
+    //width: 380px;
+    //width: 180px;
+  }
+
+  &.h1 {
+    height: 100px;
+  }
+
+  &.h2 {
+    height: 220px;
+  }
+}
+
+
+.buttons {
+  position: fixed;
+  left: 20px;
+  top: 20px;
+  z-index: 1000;
+}

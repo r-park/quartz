@@ -1,0 +1,21 @@
+{
+  "name": "mason-alt",
+  "version": "0.1.0",
+  "description": "Mason-alt",
+  "keywords": [
+    "masonry",
+    "responsive masonry",
+    "salvattore"
+  ],
+  "ignore": [
+    "**/.*",
+    "gulpfile.js",
+    "node_modules",
+    "package.json",
+    "src",
+    "target",
+    "tmp"
+  ],
+  "author": "Richard Park",
+  "license": "MIT"
+}

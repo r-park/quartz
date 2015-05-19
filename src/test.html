@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Media Query</title>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+
+<body>
+<div class="buttons">
+  <button onclick="addItems('prepend');" type="button">Prepend</button>
+  <br><br>
+  <button onclick="addItems('append');" type="button">Append</button>
+  <br><br>
+  <button onclick="update(2);" type="button">Change columns</button>
+</div>
+
+
+<div class="container">
+  <article onclick="alert('inline: onclick');" class="item item-1 w1 h1"><h1>1</h1></article>
+  <article class="item item-2 w2 h2"><h1>2</h1></article>
+  <article class="item item-3 w1 h1"><h1>3</h1></article>
+  <article onclick="removeItem(this);" class="item item-4 w1 h1"><h1>4</h1></article>
+  <article class="item item-5 w1 h2"><h1>5</h1></article>
+  <article class="item item-6 w1 h1"><h1>6</h1></article>
+  <article class="item item-7 w2 h1"><h1>7</h1></article>
+</div>
+
+
+
+
+
+
+<script src="main.js"></script>
+<script src="append.js"></script>
+<script>
+  var item = document.querySelector('.item-1');
+  item.addEventListener('click', function(){
+    alert('addEventListener: click');
+  });
+
+  var h1 = item.querySelector('h1');
+  h1.addEventListener('click', function(){
+    alert('content > addEventListener: click');
+  });
+
+  init({
+    containerSelector: '.container',
+    columnClass: 'column',
+    columnSelector: '.column',
+    columnCount: 3,
+    itemSelector: '.item',
+
+    mediaQueries: [
+      {
+        query: 'screen and (max-width: 39.9375em)',
+        columns: 1,
+        container: '',
+        item: ''
+      },
+      {
+        query: 'screen and (min-width: 40em) and (max-width: 47.9375em)',
+        columns: 2,
+        container: '',
+        item: ''
+      },
+      {
+        query: 'screen and (min-width: 48em)',
+        columns: 3,
+        container: '',
+        item: ''
+      }
+    ]
+  });
+</script>
+</body>
+</html>
