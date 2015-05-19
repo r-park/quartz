@@ -1,3 +1,5 @@
+'use strict';
+
 
 var container;
 
@@ -13,49 +15,34 @@ var initialized = false;
 
 
 function append(items) {
-  var t1 = Date.now();
+  var columns = createColumnFragments(),
+      heights = getItemHeights(items);
 
-  var heights = getItemHeights(items),
-      columns = [];
-
-  for (var i = 0; i < columnCount; i++) {
-    columns.push(document.createDocumentFragment());
-  }
-
-  updateYIndices();
+  refreshYIndices();
   distributeItemsToColumns(items, columns, heights);
 
-  for (var k = 0; k < columnCount; k++) {
-    container.children[k].appendChild(columns[k]);
+  for (var i = 0; i < columnCount; i++) {
+    container.children[i].appendChild(columns[i]);
   }
 
   $items = $items.concat(items);
-
-  var t2 = Date.now();
-  console.log(t1, ':', t2, ':', t2 - t1);
 }
 
 
 function prepend(items) {
-  var t1 = Date.now();
+  var columns  = createColumns(),
+      heights1 = getItemHeights(items),
+      heights2 = getExistingItemHeights(),
+      heights  = heights1.concat(heights2);
 
-  var heights1 = getItemHeights(items);
-  var heights2 = getExistingItemHeights();
-  var heights = heights1.concat(heights2);
   items = items.concat($items);
 
   resetYIndices();
   removeColumns();
-
-  var columns = createColumns(columnCount);
-
   distributeItemsToColumns(items, columns.childNodes, heights);
   container.appendChild(columns);
 
   $items = items;
-
-  var t2 = Date.now();
-  console.log(t1, ':', t2, ':', t2 - t1);
 }
 
 
@@ -66,38 +53,28 @@ function removeItem(item) {
 
 
 function update(numColumns) {
-  var t1 = Date.now();
+  if (numColumns) columnCount = numColumns;
 
-  var heights = getExistingItemHeights();
+  var columns = createColumns(),
+      heights = getExistingItemHeights();
 
   resetYIndices();
   removeColumns();
-
-  if (numColumns) {
-    columnCount = numColumns;
-  }
-
-  var columns = createColumns(columnCount);
-
   distributeItemsToColumns($items, columns.childNodes, heights);
   container.appendChild(columns);
-
-  var t2 = Date.now();
-  console.log(t1, ':', t2, ':', t2 - t1);
 }
 
 
 function distributeItemsToColumns(items, columns, heights) {
   var count = items.length,
-      index,
+      columnIndex,
       item;
 
   for (var i = 0; i < count; i++) {
-    index = getColumnIndex();
+    columnIndex = getColumnIndex();
     item = items[i];
-
-    yIndices[index] += heights[i] + 20;
-    columns[index].appendChild(item);
+    yIndices[columnIndex] += heights[i] + 20;
+    columns[columnIndex].appendChild(item);
   }
 }
 
@@ -106,10 +83,25 @@ function createColumns(count) {
   var columns = document.createDocumentFragment(),
       column;
 
-  for (var i = 0; i < count; i++) {
+  count = count || columnCount;
+
+  while (count--) {
     column = document.createElement('div');
     column.className = columnClass;
     columns.appendChild(column);
+  }
+
+  return columns;
+}
+
+
+function createColumnFragments(count) {
+  var columns = [];
+
+  count = count || columnCount;
+
+  while (count--) {
+    columns.push(document.createDocumentFragment());
   }
 
   return columns;
@@ -130,25 +122,14 @@ function getColumnIndex() {
 }
 
 
-function resetYIndices() {
-  yIndices.length = 0;
+function getExistingItemHeights() {
+  var heights = [];
 
-  for (var i = 0; i < columnCount; i++) {
-    yIndices.push(0);
+  for (var i = 0, l = $items.length; i < l; i++) {
+    heights.push($items[i].offsetHeight);
   }
-}
 
-
-function updateYIndices() {
-  var columns = container.children;
-
-  if (columns.length) {
-    yIndices.length = 0;
-
-    for (var i = 0; i < columnCount; i++) {
-      yIndices.push(columns[i].offsetHeight);
-    }
-  }
+  return heights;
 }
 
 
@@ -158,7 +139,7 @@ function getItemHeights(items) {
   temp.style.position = 'absolute';
   temp.style.left = '-10000px';
   temp.style.top = '-10000px';
-  //temp.style.width = container.offsetWidth / columnCount + 'px';
+  temp.style.width = container.offsetWidth / columnCount + 'px';
 
   var heights = [],
       i = 0,
@@ -180,28 +161,41 @@ function getItemHeights(items) {
 }
 
 
-function getExistingItemHeights() {
-  var heights = [];
-  for (var i = 0, l = $items.length; i < l; i++) {
-    heights.push($items[i].offsetHeight);
+function refreshYIndices() {
+  var columns = container.children,
+      count = columns.length;
+
+  if (count) {
+    yIndices.length = 0;
+
+    for (var i = 0; i < count; i++) {
+      yIndices.push(columns[i].offsetHeight);
+    }
   }
-  return heights;
 }
 
 
-function bindToMediaQueryEvents(options) {
-  var handleMediaQueryChange = function(mql) {
+function resetYIndices() {
+  yIndices.length = 0;
+
+  var count = columnCount;
+  while (count--) {
+    yIndices.push(0);
+  }
+}
+
+
+function bindToMediaQueryLists(options) {
+  var mqlListener = function(mql) {
     if (mql.matches) {
       columnCount = options.columns;
-      if (initialized) {
-        update(columnCount);
-      }
+      if (initialized) update();
     }
   };
 
   var mql = window.matchMedia(options.query);
-  mql.addListener(handleMediaQueryChange);
-  handleMediaQueryChange(mql);
+  mql.addListener(mqlListener);
+  mqlListener(mql);
 }
 
 
@@ -212,18 +206,18 @@ function init(options) {
   columnCount = options.columnCount;
 
   if (options.mediaQueries && window.matchMedia) {
-    for (var i = 0, l = options.mediaQueries.length; i < l; i++) {
-      bindToMediaQueryEvents(options.mediaQueries[i]);
+    var i = options.mediaQueries.length;
+    while (i--) {
+      bindToMediaQueryLists(options.mediaQueries[i]);
     }
   }
 
   var items = container.querySelectorAll(options.itemSelector);
-
   for (var n = 0, m = items.length; n < m; n++) {
     $items.push(items[n]);
   }
 
   update();
+
   initialized = true;
 }
-
