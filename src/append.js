@@ -1,7 +1,7 @@
 
 var addItems = (function(){
 
-  var count = 7;
+  var count = document.querySelectorAll('.item').length;
 
 
   function createItem() {
@@ -20,7 +20,7 @@ var addItems = (function(){
     var elements = [],
         fragment = document.createDocumentFragment(),
         i = 0,
-        l = 500,
+        l = 1,
         element;
 
     for (i; i < l; i++) {
