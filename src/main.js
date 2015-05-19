@@ -228,7 +228,7 @@ function init(options) {
   container = document.querySelector(options.containerSelector);
   columnCount = options.columnCount;
 
-  if (options.mediaQueries) {
+  if (options.mediaQueries && window.matchMedia) {
     for (var i = 0, l = options.mediaQueries.length; i < l; i++) {
       bindToMediaQueryEvents(options.mediaQueries[i]);
     }
