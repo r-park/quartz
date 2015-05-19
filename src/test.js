@@ -8,6 +8,12 @@ h1.addEventListener('click', function(){
   alert('content > addEventListener: click');
 });
 
+var removeButton = document.querySelector('.js-remove-items');
+removeButton.addEventListener('click', function(){
+  var items = document.querySelectorAll('.removable');
+  removeItem(items);
+});
+
 init({
   containerSelector: '.container',
   columnClass: 'column',

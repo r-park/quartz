@@ -18,16 +18,18 @@
   <button onclick="addItems('append');" type="button">Append</button>
   <br><br>
   <button onclick="update(2);" type="button">Change columns</button>
+  <br><br>
+  <button class="js-remove-items" type="button">Remove items 2, 4, 6</button>
 </div>
 
 
 <div class="container">
   <article onclick="alert('inline: onclick');" class="item item-1 w1 h1"><h1>1</h1></article>
-  <article class="item item-2 w2 h2"><h1>2</h1></article>
+  <article class="item item-2 w2 h2 removable"><h1>2</h1></article>
   <article class="item item-3 w1 h1"><h1>3</h1></article>
-  <article onclick="removeItem(this);" class="item item-4 w1 h1"><h1>4</h1></article>
+  <article onclick="removeItem(this);" class="item item-4 w1 h1 removable"><h1>4</h1></article>
   <article class="item item-5 w1 h2"><h1>5</h1></article>
-  <article class="item item-6 w1 h1"><h1>6</h1></article>
+  <article class="item item-6 w1 h1 removable"><h1>6</h1></article>
   <article class="item item-7 w2 h1"><h1>7</h1></article>
 </div>
 

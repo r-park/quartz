@@ -46,8 +46,13 @@ function prepend(items) {
 }
 
 
-function removeItem(item) {
-  $items.splice($items.indexOf(item), 1);
+function removeItem(items) {
+  var i = items.length;
+
+  while (i--) {
+    $items.splice($items.indexOf(items[i]), 1);
+  }
+
   update();
 }
 
