@@ -22,11 +22,11 @@ $grid-max-width: 930px !default;
     width: grid-column-width(1, 1);
   }
 
-  @include media-query(640, 768px) {
+  @include media-query(640, 800px) {
     width: grid-column-width(1, 2);
   }
 
-  @include media-query($min: 768px) {
+  @include media-query($min: 800px) {
     width: grid-column-width(1, 3);
   }
 }
