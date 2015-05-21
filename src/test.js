@@ -11,13 +11,14 @@ h1.addEventListener('click', function(){
 var removeButton = document.querySelector('.js-remove-items');
 removeButton.addEventListener('click', function(){
   var items = document.querySelectorAll('.removable');
-  removeItem(items);
+  quartz.remove(items);
 });
 
-init({
+
+var quartz = new Quartz({
   containerSelector: '.container',
   columnClass: 'column',
-  columnSelector: '.column',
+  //columnSelector: '.column',
   columnCount: 3,
   itemSelector: '.item',
 
@@ -36,3 +37,41 @@ init({
     }
   ]
 });
+
+
+var addItems = (function(){
+
+  var count = document.querySelectorAll('.item').length;
+
+
+  function createItem() {
+    var element = document.createElement('article'),
+        widthClass = Math.random() > 0.7 ? 'w2' : 'w1',
+        heightClass = Math.random() > 0.7 ? 'h2' : 'h1';
+
+    element.innerHTML = '<h1>' + ++count + '</h1>';
+    element.className = ['item', 'item-' + count, widthClass, heightClass].join(' ');
+
+    return element;
+  }
+
+
+  return function(method) {
+    var elements = [],
+        i = 0,
+        l = 1,
+        element;
+
+    for (i; i < l; i++) {
+      element = createItem();
+      elements.push(element);
+    }
+
+    if (method === 'prepend') {
+      elements = elements.reverse();
+    }
+    //mason.container.appendChild(fragment);
+    quartz[method](elements);
+  };
+
+}());
