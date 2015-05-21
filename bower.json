@@ -1,10 +1,13 @@
 {
-  "name": "mason-alt",
+  "name": "quartz",
   "version": "0.1.0",
-  "description": "Mason-alt",
+  "description": "Quartz",
   "keywords": [
+    "quartz",
+    "columns",
+    "layout",
     "masonry",
-    "responsive masonry",
+    "responsive",
     "salvattore"
   ],
   "ignore": [

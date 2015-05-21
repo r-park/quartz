@@ -1,7 +1,7 @@
 {
-  "name": "mason-alt",
+  "name": "quartz.js",
   "version": "0.1.0",
-  "description": "Mason-alt",
+  "description": "Quartz",
 
   "devDependencies": {
     "browser-sync": "~2.7.1",
@@ -23,18 +23,21 @@
 
   "repository": {
     "type": "git",
-    "url": "https://github.com/r-park/mason-alt.git"
+    "url": "https://github.com/r-park/quartz.git"
   },
 
   "bugs": {
-    "url": "https://github.com/r-park/mason-alt/issues"
+    "url": "https://github.com/r-park/quartz/issues"
   },
 
-  "homepage": "https://github.com/r-park/mason-alt",
+  "homepage": "https://github.com/r-park/quartz",
 
   "keywords": [
+    "quartz",
+    "columns",
+    "layout",
     "masonry",
-    "responsive masonry",
+    "responsive",
     "salvattore"
   ],
 
