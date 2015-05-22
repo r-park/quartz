@@ -65,7 +65,7 @@ gulp.task('serve', function server(){
 
 
 gulp.task('lint', function(){
-  return gulp.src('./src/quartz.js')
+  return gulp.src('./src/quartz*.js')
     .pipe(eslint({useEslintrc: true}))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
@@ -73,8 +73,8 @@ gulp.task('lint', function(){
 
 
 gulp.task('build', gulp.series('lint', function(){
-  var headerTemplate = '/* <%= name %> v<%= version %> - <%= date %> */\n';
-  var headerContent = {name: pkg.name, version: pkg.version, date: new Date()};
+  var headerTemplate = '/* quartz v<%= version %> - <%= date %> */\n';
+  var headerContent = {version: pkg.version, date: (new Date()).toISOString()};
   var umdHelper = function(){ return 'Quartz'; };
 
   return gulp.src('./src/quartz.js')

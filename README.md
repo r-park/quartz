@@ -1,7 +1,7 @@
 # Quartz
 Quartz is a javascript column layout library.
 
-## Getting Started
+## Installation
 #### bower
 ```
 bower install quartz
@@ -11,7 +11,7 @@ bower install quartz
 npm install quartz --save
 ```
 
-## Examples
+## Using Quartz
 ```javascript
 var quartz = new Quartz({
   container: '.container',

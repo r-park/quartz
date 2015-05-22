@@ -108,7 +108,7 @@ Quartz.prototype = {
 
 
   /**
-   * @param {number} numColumns
+   * @param {number} [numColumns]
    */
   update : function(numColumns) {
     if (numColumns) this.columnCount = numColumns;

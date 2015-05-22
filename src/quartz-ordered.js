@@ -1,64 +1,59 @@
 'use strict';
 
-var isArray = Array.isArray;
-var slice = Array.prototype.slice;
+
+var isArray = Array.isArray,
+    slice = Array.prototype.slice;
 
 
 /**
  * @name Quartz
  * @constructor
  *
- * @param {{}}     config
- * @param {string} config.columnClass
- * @param {number} config.columnCount
- * @param {string} config.containerSelector
- * @param {string} config.itemSelector
- * @param {Array}  config.mediaQueries
+ * @param {{}}              config
+ * @param {string}          config.columnClass
+ * @param {number}          [config.columnCount]
+ * @param {Element|string}  config.container
+ * @param {NodeList|string} config.items
+ * @param {Array}           [config.mediaQueries]
+ *
  */
 function Quartz(config) {
-  this.container = document.querySelector(config.containerSelector);
-
   this.columnClass = config.columnClass;
-
   this.columnCount = config.columnCount;
 
-  /**
-   * @type Array.<Element>
-   */
-  this.items = [];
-
-
-  var items = this.container.querySelectorAll(config.itemSelector);
-  for (var n = 0, m = items.length; n < m; n++) {
-    this.items.push(items[n]);
+  if (typeof config.container === 'string') {
+    this.container = document.querySelector(config.container);
+  }
+  else {
+    this.container = config.container;
   }
 
+  if (typeof config.items === 'string') {
+    this.items = this.toArray(document.querySelectorAll(config.items));
+  }
+  else {
+    this.items = this.toArray(config.items);
+  }
 
   if (config.mediaQueries && window.matchMedia) {
-    var i = config.mediaQueries.length;
-    while (i--) {
-      this.bindToMediaQueryList(config.mediaQueries[i]);
-    }
+    this.bindToMediaQueries(config.mediaQueries);
   }
-
-
-  this.update();
-
-  this.initialized = true;
+  else {
+    this.update();
+  }
 }
 
 
 Quartz.prototype = {
 
   /**
-   * TODO: NodeList to Array
-   * @param {Array.<Element>|NodeList} items
+   * @param {Element[]|NodeList} items
    */
   append : function(items) {
-    var container = this.container,
-        columns = this.createColumnFragments(),
+    var container   = this.container,
+        columns     = this.createColumnFragments(),
         columnCount = this.columnCount,
-        index = this.items.length % columnCount;
+        index       = this.items.length % columnCount;
 
     this.distributeItemsToColumns(items, columns, index);
 
@@ -66,35 +61,40 @@ Quartz.prototype = {
       container.children[i].appendChild(columns[i]);
     }
 
-    this.items = this.items.concat(items);
+    this.items = this.items.concat(this.toArray(items));
   },
 
 
   /**
-   * TODO: NodeList to Array
-   * @param {Array.<Element>|NodeList} items
+   * @param {Element[]|NodeList} items
    */
   prepend : function(items) {
-    var columns  = this.createColumns();
+    var columns = this.createColumns();
 
-    items = items.concat(this.items);
+    items = this.toArray(items).concat(this.items);
 
     this.removeColumns();
     this.distributeItemsToColumns(items, columns.childNodes);
     this.container.appendChild(columns);
-
     this.items = items;
   },
 
 
   /**
-   * @param {Array.<Element>|NodeList} items
+   * @param {Element|Element[]|NodeList} items
    */
   remove : function(items) {
-    var i = items.length;
+    items = items.length >= 0 ? items : [items];
+
+    var _items = this.items,
+        i = items.length,
+        index;
 
     while (i--) {
-      this.items.splice(this.items.indexOf(items[i]), 1);
+      index = _items.indexOf(items[i]);
+      if (index !== -1) {
+        _items.splice(index, 1);
+      }
     }
 
     this.update();
@@ -116,8 +116,8 @@ Quartz.prototype = {
 
 
   /**
-   * @param {Array.<Element>|NodeList} items
-   * @param {Array.<DocumentFragment>|Array.<Element>|NodeList} columns
+   * @param {Element[]|NodeList} items
+   * @param {DocumentFragment[]|NodeList} columns
    * @param {number} [startIndex]
    */
   distributeItemsToColumns : function(items, columns, startIndex) {
@@ -160,18 +160,18 @@ Quartz.prototype = {
 
   /**
    * @param {number} [count]
-   * @returns {Array.<DocumentFragment>}
+   * @returns {DocumentFragment[]}
    */
   createColumnFragments : function(count) {
-    var columns = [];
+    var column = [];
 
     count = count || this.columnCount;
 
     while (count--) {
-      columns.push(document.createDocumentFragment());
+      column.push(document.createDocumentFragment());
     }
 
-    return columns;
+    return column;
   },
 
 
@@ -179,19 +179,42 @@ Quartz.prototype = {
    *
    */
   removeColumns : function() {
-    var container = this.container,
-        column;
+    var container = this.container;
 
-    while (column = container.firstChild) {
-      container.removeChild(column);
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
     }
   },
 
 
   /**
-   * @param {{}}     config
-   * @param {number} config.columns
-   * @param {string} config.query
+   * @param {Element|Element[]|NodeList} object
+   * @returns {Element[]}
+   */
+  toArray : function(object) {
+    if (isArray(object)) return object;
+
+    if (typeof object.length === 'number') {
+      return slice.call(object);
+    }
+
+    return [object];
+  },
+
+
+  /**
+   * @param {{query:string, columns:number}[]} mediaQueries
+   */
+  bindToMediaQueries : function(mediaQueries) {
+    var i = mediaQueries.length;
+    while (i--) {
+      this.bindToMediaQueryList(mediaQueries[i]);
+    }
+  },
+
+
+  /**
+   * @param {{query:string, columns:number}} config
    */
   bindToMediaQueryList : function(config) {
     var that = this;
@@ -199,13 +222,13 @@ Quartz.prototype = {
     var mqlListener = function(mql) {
       if (mql.matches) {
         that.columnCount = config.columns;
-        if (that.initialized) that.update();
+        that.update();
       }
     };
 
-    var mql = window.matchMedia(config.query);
-    mql.addListener(mqlListener);
-    mqlListener(mql);
+    var mediaQueryList = window.matchMedia(config.query);
+    mediaQueryList.addListener(mqlListener);
+    mqlListener(mediaQueryList);
   }
 
 };
