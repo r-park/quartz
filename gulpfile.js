@@ -6,7 +6,6 @@ var browserSync = require('browser-sync'),
     pkg = require('./package.json'),
     rename = require('gulp-rename'),
     sass = require('gulp-sass'),
-    sourcemaps = require('gulp-sourcemaps'),
     uglify = require('gulp-uglify'),
     umd = require('gulp-umd');
 
@@ -69,13 +68,11 @@ gulp.task('build', function(){
   var headerContent = {name: pkg.name, version: pkg.version, date: new Date()};
   var umdHelper = function(){ return 'Quartz'; };
 
-  gulp.src('./src/quartz.js')
+  return gulp.src('./src/quartz.js')
     .pipe(umd({exports: umdHelper, namespace: umdHelper}))
     .pipe(header(headerTemplate, headerContent))
     .pipe(gulp.dest('./dist'))
-    .pipe(sourcemaps.init())
     .pipe(uglify({mangle: true}))
-    .pipe(sourcemaps.write('./', {includeContent: true}))
     .pipe(rename('quartz.min.js'))
     .pipe(header(headerTemplate, headerContent))
     .pipe(gulp.dest('./dist'));
