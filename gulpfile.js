@@ -67,16 +67,16 @@ gulp.task('serve', function server(){
 gulp.task('build', function(){
   var headerTemplate = '/* <%= name %> v<%= version %> - <%= date %> */\n';
   var headerContent = {name: pkg.name, version: pkg.version, date: new Date()};
-  var umdHelper = function(){ return 'mason'; };
+  var umdHelper = function(){ return 'Quartz'; };
 
-  gulp.src('./src/mason.js')
+  gulp.src('./src/quartz.js')
     .pipe(umd({exports: umdHelper, namespace: umdHelper}))
     .pipe(header(headerTemplate, headerContent))
     .pipe(gulp.dest('./dist'))
     .pipe(sourcemaps.init())
     .pipe(uglify({mangle: true}))
     .pipe(sourcemaps.write('./', {includeContent: true}))
-    .pipe(rename('mason.min.js'))
+    .pipe(rename('quartz.min.js'))
     .pipe(header(headerTemplate, headerContent))
     .pipe(gulp.dest('./dist'));
 });
