@@ -16,11 +16,11 @@ removeButton.addEventListener('click', function(){
 
 
 var quartz = new Quartz({
-  containerSelector: '.container',
+  container: '.container',
+  items: '.item',
+
   columnClass: 'column',
-  //columnSelector: '.column',
   columnCount: 3,
-  itemSelector: '.item',
 
   mediaQueries: [
     {
