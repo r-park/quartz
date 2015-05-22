@@ -4,10 +4,11 @@
   "description": "Quartz",
 
   "devDependencies": {
-    "browser-sync": "^2.7.3",
+    "browser-sync": "~2.7.2",
     "del": "^1.2.0",
     "gulp": "gulpjs/gulp.git#4.0",
     "gulp-bump": "^0.3.1",
+    "gulp-eslint": "^0.12.0",
     "gulp-header": "^1.2.2",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.0.1",

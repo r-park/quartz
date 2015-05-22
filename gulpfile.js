@@ -1,6 +1,7 @@
 var browserSync = require('browser-sync'),
     bump = require('gulp-bump'),
     del = require('del'),
+    eslint = require('gulp-eslint'),
     gulp = require('gulp'),
     header = require('gulp-header'),
     pkg = require('./package.json'),
@@ -63,7 +64,15 @@ gulp.task('serve', function server(){
 });
 
 
-gulp.task('build', function(){
+gulp.task('lint', function(){
+  return gulp.src('./src/quartz.js')
+    .pipe(eslint({useEslintrc: true}))
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
+});
+
+
+gulp.task('build', gulp.series('lint', function(){
   var headerTemplate = '/* <%= name %> v<%= version %> - <%= date %> */\n';
   var headerContent = {name: pkg.name, version: pkg.version, date: new Date()};
   var umdHelper = function(){ return 'Quartz'; };
@@ -76,7 +85,7 @@ gulp.task('build', function(){
     .pipe(rename('quartz.min.js'))
     .pipe(header(headerTemplate, headerContent))
     .pipe(gulp.dest('./dist'));
-});
+}));
 
 
 gulp.task('default', gulp.series('clean', 'copy', 'sass', function watch(){

@@ -273,11 +273,10 @@ Quartz.prototype = {
    *
    */
   removeColumns : function() {
-    var container = this.container,
-        column;
+    var container = this.container;
 
-    while (column = container.firstChild) {
-      container.removeChild(column);
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
     }
   },
 
@@ -321,9 +320,9 @@ Quartz.prototype = {
       }
     };
 
-    var mql = window.matchMedia(config.query);
-    mql.addListener(mqlListener);
-    mqlListener(mql);
+    var mediaQueryList = window.matchMedia(config.query);
+    mediaQueryList.addListener(mqlListener);
+    mqlListener(mediaQueryList);
   }
 
 };
