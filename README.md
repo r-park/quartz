@@ -26,6 +26,13 @@ var quartz = new Quartz({
 });
 ```
 
+#### Configuration
+`container` : a string selector or element<br>
+`items` : a string selector, array of elements, or a NodeList<br>
+`columnClass` : a string representing the css class(es) to be applied to columns<br>
+`columnCount` : initial number of columns to display; not required if `mediaQueries` are provided<br>
+`mediaQueries` : optional array of media-query configuration objects<br><br>
+
 #### Appending items
 ```javascript
 // single item
