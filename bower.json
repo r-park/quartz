@@ -2,14 +2,12 @@
   "name": "quartz",
   "version": "0.1.0",
   "description": "Quartz",
-  "keywords": [
-    "quartz",
-    "columns",
-    "layout",
-    "masonry",
-    "responsive",
-    "salvattore"
-  ],
+  "homepage": "https://github.com/r-park/quartz",
+
+  "dependencies": {
+    "matchMedia": "*"
+  },
+
   "ignore": [
     "**/.*",
     "gulpfile.js",
@@ -19,6 +17,22 @@
     "target",
     "tmp"
   ],
+
+  "keywords": [
+    "quartz",
+    "columns",
+    "layout",
+    "masonry",
+    "responsive",
+    "salvattore"
+  ],
+
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+
   "author": "Richard Park",
   "license": "MIT"
 }
