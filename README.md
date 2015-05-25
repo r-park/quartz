@@ -8,13 +8,13 @@ Quartz is a javascript library for producing pinterest-style layouts that respon
 - Safari
 
 ## Installation
-#### bower
+**bower**
 ```
 bower install quartz
 ```
-#### npm
+**npm**
 ```
-npm install quartz --save
+npm install quartz
 ```
 
 ## Using Quartz
@@ -25,6 +25,12 @@ Define your HTML:
   <div class="item">2</div>
   <div class="item">3</div>
 </div>
+```
+**For IE 9**, include the [provided](https://github.com/r-park/quartz/tree/master/dist) `match-media.js` polyfill, which is a concatenated version of [matchMedia.js](https://github.com/paulirish/matchMedia.js)
+```html
+<!--[if lt IE 10]>
+<script src="match-media.js"></script>
+<![endif]-->
 ```
 Setup your CSS grid as you normally would, e.g.
 ```css
@@ -58,13 +64,6 @@ var quartz = new Quartz({
     {query: 'screen and (min-width: 50em)', columns: 3}
   ]
 });
-```
-
-**For IE 9**, include the [provided](https://github.com/r-park/quartz/tree/master/dist) `match-media.js` polyfill, which is a concatenated version of [matchMedia.js](https://github.com/paulirish/matchMedia.js)
-```html
-<!--[if lt IE 10]>
-<script src="match-media.js"></script>
-<![endif]-->
 ```
 
 ## Configuration
