@@ -1,32 +1,6 @@
 # Quartz
-Quartz is a javascript library for producing pinterest-style layouts. Quartz works with your CSS grid media queries to convert your HTML from this:
-```html
-<div class="container">
-  <div class="item">1</div>
-  <div class="item">2</div>
-  <div class="item">3</div>
-  <div class="item">4</div>
-  <div class="item">5</div>
-  <div class="item">6</div>
-</div>
-```
-to this:
-```html
-<div class="container">
-  <div class="column">
-    <div class="item">1</div>
-    <div class="item">4</div>
-  </div>
-  <div class="column">
-    <div class="item">2</div>
-    <div class="item">5</div>
-  </div>
-  <div class="column">
-    <div class="item">3</div>
-    <div class="item">6</div>
-  </div>
-</div>
-```
+Quartz is a javascript library for producing pinterest-style layouts that respond to media query changes.
+
 ## Browser Support
 - Chrome
 - Firefox
@@ -44,6 +18,14 @@ npm install quartz --save
 ```
 
 ## Using Quartz
+Define your HTML:
+```html
+<div class="container">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+</div>
+```
 Setup your CSS grid as you normally would, e.g.
 ```css
 @media screen and (max-width: 39.9375em) {
@@ -70,7 +52,6 @@ var quartz = new Quartz({
   container: '.container',
   items: '.item',
   columnClass: 'column',
-  columnCount: 3,
   mediaQueries: [
     {query: 'screen and (max-width: 39.9375em)', columns: 1},
     {query: 'screen and (min-width: 40em) and (max-width: 49.9375em)', columns: 2},
@@ -87,11 +68,10 @@ var quartz = new Quartz({
 ```
 
 ## Configuration
-`container` : a string selector or element<br>
-`items` : a string selector, array of elements, or a NodeList<br>
-`columnClass` : a string representing the css class(es) to be applied to columns<br>
-`columnCount` : initial number of columns to display; not required if `mediaQueries` are provided<br>
-`mediaQueries` : optional array of media-query configuration objects<br><br>
+`container` : A string selector or HTMLElement<br>
+`items` : A string selector, or an array of HTMLElements, or a NodeList<br>
+`columnClass` : The CSS class(es) to be applied to columns<br>
+`mediaQueries` : Array of media query configuration objects<br><br>
 
 ## Appending items
 ```javascript
