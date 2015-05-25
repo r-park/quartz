@@ -1,21 +1,23 @@
 var browserSync = require('browser-sync'),
     bump = require('gulp-bump'),
+    concat = require('gulp-concat'),
     del = require('del'),
     eslint = require('gulp-eslint'),
     gulp = require('gulp'),
     header = require('gulp-header'),
-    pkg = require('./package.json'),
     rename = require('gulp-rename'),
     sass = require('gulp-sass'),
+    sourcemaps = require('gulp-sourcemaps'),
     uglify = require('gulp-uglify'),
     umd = require('gulp-umd');
 
 var manifests = ['./bower.json', './package.json'];
 
 
+
 gulp.task('bump', function(){
   return gulp.src(manifests)
-    .pipe(bump())
+    .pipe(bump({type: 'patch'}))
     .pipe(gulp.dest('./'));
 });
 
@@ -27,14 +29,45 @@ gulp.task('bump:minor', function(){
 });
 
 
-gulp.task('clean', function clean(done){
+gulp.task('clean:dist', function clean(done){
+  del('./dist/*', done);
+});
+
+
+gulp.task('clean:target', function clean(done){
   del('./target/*', done);
+});
+
+
+gulp.task('matchmedia', function(){
+  return gulp.src(['./vendor/matchMedia/matchMedia.js', './vendor/matchMedia/matchMedia.addListener.js'])
+    .pipe(concat('match-media.js'))
+    .pipe(gulp.dest('./dist'));
 });
 
 
 gulp.task('copy', function copy(){
   return gulp.src(['./src/**/*.html', './src/**/*.js'])
     .pipe(gulp.dest('./target'));
+});
+
+
+gulp.task('headers', function(){
+  var pkg = require('./package.json');
+  var headerTemplate = '/* <%= name %> v<%= version %> - <%= date %> - <%= url %> */\n';
+  var headerContent = {date: (new Date()).toISOString(), name: pkg.name, version: pkg.version, url: pkg.homepage};
+
+  return gulp.src('./dist/quartz*.js')
+    .pipe(header(headerTemplate, headerContent))
+    .pipe(gulp.dest('./dist'));
+});
+
+
+gulp.task('lint', function(){
+  return gulp.src('./src/quartz*.js')
+    .pipe(eslint({useEslintrc: true}))
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 });
 
 
@@ -50,7 +83,7 @@ gulp.task('sass', function compileSass(){
 });
 
 
-gulp.task('serve', function server(){
+gulp.task('sync', function server(){
   browserSync
     .create()
     .init({
@@ -64,31 +97,36 @@ gulp.task('serve', function server(){
 });
 
 
-gulp.task('lint', function(){
-  return gulp.src('./src/quartz*.js')
-    .pipe(eslint({useEslintrc: true}))
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
-});
-
-
 gulp.task('build', gulp.series('lint', function(){
-  var headerTemplate = '/* quartz v<%= version %> - <%= date %> */\n';
-  var headerContent = {version: pkg.version, date: (new Date()).toISOString()};
   var umdHelper = function(){ return 'Quartz'; };
 
   return gulp.src('./src/quartz.js')
     .pipe(umd({exports: umdHelper, namespace: umdHelper}))
-    .pipe(header(headerTemplate, headerContent))
-    .pipe(gulp.dest('./dist'))
-    .pipe(uglify({mangle: true}))
-    .pipe(rename('quartz.min.js'))
-    .pipe(header(headerTemplate, headerContent))
     .pipe(gulp.dest('./dist'));
 }));
 
 
-gulp.task('default', gulp.series('clean', 'copy', 'sass', function watch(){
+gulp.task('uglify', function(){
+  return gulp.src('./dist/*.js')
+    .pipe(rename(function(path){
+      path.basename += ".min";
+    }))
+    .pipe(sourcemaps.init())
+    .pipe(uglify())
+    .pipe(sourcemaps.write('./', {includeContent: true}))
+    .pipe(gulp.dest('./dist'));
+});
+
+
+gulp.task('build', gulp.series('lint', 'clean:dist', 'build', 'matchmedia', 'uglify', 'headers'));
+
+
+gulp.task('dist:patch', gulp.series('bump', 'build'));
+gulp.task('dist:minor', gulp.series('bump:minor', 'build'));
+
+
+
+gulp.task('default', gulp.series('clean:target', 'copy', 'sass', function watch(){
   gulp.watch('./src/**/*.scss', gulp.task('sass'));
   gulp.watch(['./src/**/*.html', './src/**/*.js'], gulp.task('copy'));
 }));
