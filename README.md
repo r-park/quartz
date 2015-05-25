@@ -143,3 +143,6 @@ quartz.update();
 // override the currently active media query by providing a columnCount
 quartz.update(2);
 ```
+
+## License
+Quartz is free to use under the [open-source MIT license](https://github.com/r-park/quartz/blob/master/LICENSE).
