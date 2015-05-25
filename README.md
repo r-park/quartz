@@ -1,6 +1,32 @@
 # Quartz
-Quartz is a javascript column layout library.
-
+Quartz is a javascript library for producing pinterest-style layouts. Quartz works with your CSS grid media queries to convert your HTML from this:
+```html
+<div class="container">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+</div>
+```
+to this:
+```html
+<div class="container">
+  <div class="column">
+    <div class="item">1</div>
+    <div class="item">4</div>
+  </div>
+  <div class="column">
+    <div class="item">2</div>
+    <div class="item">5</div>
+  </div>
+  <div class="column">
+    <div class="item">3</div>
+    <div class="item">6</div>
+  </div>
+</div>
+```
 ## Browser Support
 - Chrome
 - Firefox
@@ -18,6 +44,27 @@ npm install quartz --save
 ```
 
 ## Using Quartz
+Setup your CSS grid as you normally would, e.g.
+```css
+@media screen and (max-width: 39.9375em) {
+  .column {
+    width: 100%; 
+  } 
+}
+
+@media screen and (min-width: 40em) and (max-width: 49.9375em) {
+  .column {
+    width: 50%; 
+  } 
+}
+
+@media screen and (min-width: 50em) {
+  .column {
+    width: 33.3333333333%; 
+  }
+}
+```
+Initialize Quartz with the media queries from your CSS grid:
 ```javascript
 var quartz = new Quartz({
   container: '.container',
@@ -31,6 +78,7 @@ var quartz = new Quartz({
   ]
 });
 ```
+
 **For IE 9**, include the [provided](https://github.com/r-park/quartz/tree/master/dist) `match-media.js` polyfill, which is a concatenated version of [matchMedia.js](https://github.com/paulirish/matchMedia.js)
 ```html
 <!--[if lt IE 10]>
@@ -92,6 +140,6 @@ quartz.remove($('.item'));
 // manually refresh the layout
 quartz.update();
 
-// force layout to change to 2 columns
+// override the currently active media query by providing a columnCount
 quartz.update(2);
 ```
