@@ -15,7 +15,8 @@
     "package.json",
     "src",
     "target",
-    "tmp"
+    "tmp",
+    "vendor"
   ],
 
   "keywords": [
