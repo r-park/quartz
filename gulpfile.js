@@ -125,7 +125,6 @@ gulp.task('dist:patch', gulp.series('bump', 'build'));
 gulp.task('dist:minor', gulp.series('bump:minor', 'build'));
 
 
-
 gulp.task('default', gulp.series('clean:target', 'copy', 'sass', function watch(){
   gulp.watch('./src/**/*.scss', gulp.task('sass'));
   gulp.watch(['./src/**/*.html', './src/**/*.js'], gulp.task('copy'));

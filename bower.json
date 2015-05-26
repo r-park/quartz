@@ -1,7 +1,7 @@
 {
   "name": "quartz",
   "version": "0.1.0",
-  "description": "Quartz",
+  "description": "Quartz is a responsive javascript column layout utility.",
   "homepage": "https://github.com/r-park/quartz",
 
   "dependencies": {

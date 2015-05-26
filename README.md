@@ -1,10 +1,10 @@
 # Quartz
-Quartz is a javascript library for producing pinterest-style layouts that respond to media query changes.
+Quartz is a javascript utility for producing pinterest-style layouts that respond to media query changes.
 
 ## Browser Support
 - Chrome
 - Firefox
-- IE 9+ (requires matchMedia polyfill)
+- IE 9+ (IE 9 requires matchMedia polyfill)
 - Safari
 
 ## Installation

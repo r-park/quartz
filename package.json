@@ -1,7 +1,7 @@
 {
   "name": "quartz.js",
   "version": "0.1.0",
-  "description": "Quartz",
+  "description": "Quartz is a responsive javascript column layout utility.",
 
   "devDependencies": {
     "browser-sync": "~2.7.2",
