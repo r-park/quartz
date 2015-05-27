@@ -2,6 +2,14 @@
   "name": "quartz.js",
   "version": "0.1.0",
   "description": "Quartz is a responsive javascript column layout utility.",
+  "homepage": "https://github.com/r-park/quartz",
+  "repository": "https://github.com/r-park/quartz.git",
+  "author": "Richard Park",
+  "license": "MIT",
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
 
   "devDependencies": {
     "browser-sync": "~2.7.2",
@@ -19,21 +27,6 @@
     "sass-lib": "git://github.com/r-park/sass-lib.git"
   },
 
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/r-park/quartz.git"
-  },
-
-  "bugs": {
-    "url": "https://github.com/r-park/quartz/issues"
-  },
-
-  "homepage": "https://github.com/r-park/quartz",
-
   "keywords": [
     "quartz",
     "columns",
@@ -41,8 +34,5 @@
     "masonry",
     "responsive",
     "salvattore"
-  ],
-
-  "author": "Richard Park",
-  "license": "MIT"
+  ]
 }
