@@ -29,12 +29,12 @@ gulp.task('bump:minor', function(){
 });
 
 
-gulp.task('clean:dist', function clean(done){
+gulp.task('clean:dist', function(done){
   del('./dist/*', done);
 });
 
 
-gulp.task('clean:target', function clean(done){
+gulp.task('clean:target', function(done){
   del('./target/*', done);
 });
 
@@ -46,7 +46,7 @@ gulp.task('matchmedia', function(){
 });
 
 
-gulp.task('copy', function copy(){
+gulp.task('copy', function(){
   return gulp.src(['./src/**/*.html', './src/**/*.js'])
     .pipe(gulp.dest('./target'));
 });
@@ -71,7 +71,7 @@ gulp.task('lint', function(){
 });
 
 
-gulp.task('sass', function compileSass(){
+gulp.task('sass', function(){
   return gulp.src('./src/*.scss')
     .pipe(sass({
       errLogToConsole: true,
@@ -83,7 +83,7 @@ gulp.task('sass', function compileSass(){
 });
 
 
-gulp.task('sync', function server(){
+gulp.task('sync', function(){
   browserSync
     .create()
     .init({
@@ -97,13 +97,13 @@ gulp.task('sync', function server(){
 });
 
 
-gulp.task('build', gulp.series('lint', function(){
+gulp.task('process', function(){
   var umdHelper = function(){ return 'Quartz'; };
 
   return gulp.src('./src/quartz.js')
     .pipe(umd({exports: umdHelper, namespace: umdHelper}))
     .pipe(gulp.dest('./dist'));
-}));
+});
 
 
 gulp.task('uglify', function(){
@@ -112,13 +112,13 @@ gulp.task('uglify', function(){
       path.basename += ".min";
     }))
     .pipe(sourcemaps.init())
-    .pipe(uglify())
+    .pipe(uglify({preserveComments: 'some'}))
     .pipe(sourcemaps.write('./', {includeContent: true}))
     .pipe(gulp.dest('./dist'));
 });
 
 
-gulp.task('build', gulp.series('lint', 'clean:dist', 'build', 'matchmedia', 'uglify', 'headers'));
+gulp.task('build', gulp.series('lint', 'clean:dist', 'process', 'matchmedia', 'uglify', 'headers'));
 
 
 gulp.task('dist:patch', gulp.series('bump', 'build'));
