@@ -298,8 +298,12 @@ Quartz.prototype = {
   toArray : function(object) {
     if (isArray(object)) return object;
 
-    if (typeof object.length === 'number') {
-      return slice.call(object);
+    var i = object.length;
+
+    if (typeof i === 'number') {
+      var a = new Array(i);
+      while (i--) { a[i] = object[i]; }
+      return a;
     }
 
     return [object];
