@@ -1,8 +1,7 @@
 'use strict';
 
 
-var isArray = Array.isArray,
-    slice = Array.prototype.slice;
+var isArray = Array.isArray;
 
 
 /**
