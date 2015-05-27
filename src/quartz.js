@@ -48,9 +48,13 @@ function Quartz(config) {
 Quartz.prototype = {
 
   /**
-   * @param {Element[]|NodeList} items
+   * @param {Element|Element[]|NodeList} items
    */
   append : function(items) {
+    if (typeof items.length === 'undefined') {
+      items = [items];
+    }
+
     var container   = this.container,
         columns     = this.createColumnFragments(),
         columnCount = this.columnCount,
@@ -68,9 +72,13 @@ Quartz.prototype = {
 
 
   /**
-   * @param {Element[]|NodeList} items
+   * @param {Element|Element[]|NodeList} items
    */
   prepend : function(items) {
+    if (typeof items.length === 'undefined') {
+      items = [items];
+    }
+
     var columns  = this.createColumns(),
         heights1 = this.getItemHeights(items),
         heights2 = this.getExistingItemHeights(),
@@ -90,7 +98,9 @@ Quartz.prototype = {
    * @param {Element|Element[]|NodeList} items
    */
   remove : function(items) {
-    items = items.length >= 0 ? items : [items];
+    if (typeof items.length === 'undefined') {
+      items = [items];
+    }
 
     var _items = this.items,
         i = items.length,
