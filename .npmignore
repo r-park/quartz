@@ -2,7 +2,9 @@
 # Directories
 #---------------------------------
 **/node_modules/
+coverage/
 target/
+test/
 tmp/
 vendor/
 
@@ -16,8 +18,11 @@ vendor/
 #---------------------------------
 # Files
 #---------------------------------
+.eslintrc
+.travis.yml
 bower.json
 gulpfile.js
+karma.conf.js
 
 
 #---------------------------------
