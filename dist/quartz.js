@@ -1,4 +1,4 @@
-/* quartz-layout v0.1.0 - 2015-06-03T06:59:59.248Z - https://github.com/r-park/quartz */
+/* quartz-layout v0.1.0 - 2015-06-03T22:50:13.701Z - https://github.com/r-park/quartz */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define([], factory);
@@ -176,10 +176,12 @@ Quartz.prototype = {
    */
   getExistingItemHeights : function() {
     var items = this.items,
-        heights = [];
+        heights = [],
+        style = window.getComputedStyle(items[0]),
+        marginBottom = parseInt(style.marginBottom, 10);
 
     for (var i = 0, l = items.length; i < l; i++) {
-      heights.push(items[i].offsetHeight);
+      heights.push(items[i].offsetHeight + marginBottom);
     }
 
     return heights;
@@ -196,7 +198,7 @@ Quartz.prototype = {
     temp.style.position = 'absolute';
     temp.style.left = '-10000px';
     temp.style.top = '-10000px';
-    temp.style.width = this.container.offsetHeight / this.columnCount + 'px';
+    temp.style.width = window.getComputedStyle(this.container.firstChild).width;
 
     var heights = [],
         i = 0,
@@ -208,8 +210,11 @@ Quartz.prototype = {
 
     this.container.appendChild(temp);
 
+    var style = window.getComputedStyle(items[0]);
+    var marginBottom = parseInt(style.marginBottom, 10);
+
     for (i = 0; i < l; i++) {
-      heights.push(items[i].offsetHeight);
+      heights.push(items[i].offsetHeight + marginBottom);
     }
 
     this.container.removeChild(temp);
