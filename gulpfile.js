@@ -1,15 +1,16 @@
 var browserSync = require('browser-sync'),
-    bump = require('gulp-bump'),
-    concat = require('gulp-concat'),
-    del = require('del'),
-    eslint = require('gulp-eslint'),
-    gulp = require('gulp'),
-    header = require('gulp-header'),
-    rename = require('gulp-rename'),
-    sass = require('gulp-sass'),
-    sourcemaps = require('gulp-sourcemaps'),
-    uglify = require('gulp-uglify'),
-    umd = require('gulp-umd');
+    bump        = require('gulp-bump'),
+    concat      = require('gulp-concat'),
+    coveralls   = require('gulp-coveralls'),
+    del         = require('del'),
+    eslint      = require('gulp-eslint'),
+    gulp        = require('gulp'),
+    header      = require('gulp-header'),
+    rename      = require('gulp-rename'),
+    sass        = require('gulp-sass'),
+    sourcemaps  = require('gulp-sourcemaps'),
+    uglify      = require('gulp-uglify'),
+    umd         = require('gulp-umd');
 
 var manifests = ['./bower.json', './package.json'];
 
@@ -39,16 +40,15 @@ gulp.task('clean:target', function(done){
 });
 
 
-gulp.task('matchmedia', function(){
-  return gulp.src(['./vendor/matchMedia/matchMedia.js', './vendor/matchMedia/matchMedia.addListener.js'])
-    .pipe(concat('match-media.js'))
-    .pipe(gulp.dest('./dist'));
-});
-
-
 gulp.task('copy', function(){
   return gulp.src(['./src/**/*.html', './src/**/*.js'])
     .pipe(gulp.dest('./target'));
+});
+
+
+gulp.task('coveralls', function() {
+  return gulp.src('./coverage/**/lcov.info')
+    .pipe(coveralls());
 });
 
 
@@ -68,6 +68,22 @@ gulp.task('lint', function(){
     .pipe(eslint({useEslintrc: true}))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
+});
+
+
+gulp.task('matchmedia', function(){
+  return gulp.src(['./vendor/matchMedia/matchMedia.js', './vendor/matchMedia/matchMedia.addListener.js'])
+    .pipe(concat('match-media.js'))
+    .pipe(gulp.dest('./dist'));
+});
+
+
+gulp.task('process', function(){
+  var umdHelper = function(){ return 'Quartz'; };
+
+  return gulp.src('./src/quartz.js')
+    .pipe(umd({exports: umdHelper, namespace: umdHelper}))
+    .pipe(gulp.dest('./dist'));
 });
 
 
@@ -94,15 +110,6 @@ gulp.task('sync', function(){
         baseDir: '.'
       }
     });
-});
-
-
-gulp.task('process', function(){
-  var umdHelper = function(){ return 'Quartz'; };
-
-  return gulp.src('./src/quartz.js')
-    .pipe(umd({exports: umdHelper, namespace: umdHelper}))
-    .pipe(gulp.dest('./dist'));
 });
 
 
