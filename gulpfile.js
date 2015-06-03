@@ -6,6 +6,7 @@ var browserSync = require('browser-sync'),
     eslint      = require('gulp-eslint'),
     gulp        = require('gulp'),
     header      = require('gulp-header'),
+    karma       = require('karma').server,
     rename      = require('gulp-rename'),
     sass        = require('gulp-sass'),
     sourcemaps  = require('gulp-sourcemaps'),
@@ -110,6 +111,11 @@ gulp.task('sync', function(){
         baseDir: '.'
       }
     });
+});
+
+
+gulp.task('test', function(done){
+  karma.start({configFile: __dirname + '/karma.conf.js'}, done);
 });
 
 
