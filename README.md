@@ -1,5 +1,5 @@
 # Quartz
-[Quartz](http://r-park.github.io/quartz) is a javascript utility for producing pinterest-style layouts that respond to media query changes.
+Quartz is a javascript utility for producing pinterest-style layouts that respond to media query changes.
 
 ## Installation
 **bower**
