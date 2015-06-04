@@ -1,4 +1,4 @@
-/* quartz-layout v0.1.2 - 2015-06-04T04:57:29.933Z - https://github.com/r-park/quartz */
+/* quartz-layout v0.1.3 - 2015-06-04T04:59:52.300Z - https://github.com/r-park/quartz */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define([], factory);
@@ -302,7 +302,7 @@ Quartz.prototype = {
     column.style.left = '-10000px';
     column.style.top = '-10000px';
 
-    if (liveColumn) {
+    if (liveColumn && liveColumn.className === this.columnClass) {
       column.style.width = window.getComputedStyle(liveColumn).width;
     }
 
