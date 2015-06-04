@@ -1,4 +1,4 @@
-/* quartz-layout v0.1.1 - 2015-06-04T04:19:52.298Z - https://github.com/r-park/quartz */
+/* quartz-layout v0.1.2 - 2015-06-04T04:57:29.933Z - https://github.com/r-park/quartz */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define([], factory);
@@ -51,6 +51,8 @@ function Quartz(config) {
   else {
     this.update();
   }
+
+  this.initialized = true;
 }
 
 
@@ -137,7 +139,8 @@ Quartz.prototype = {
     this.resetYIndices();
 
     if (this.items.length) {
-      this.distributeItemsToColumns(this.items, columns.childNodes, this.getExistingItemHeights());
+      var heights = this.initialized ? this.getExistingItemHeights() : this.getItemHeights(this.items);
+      this.distributeItemsToColumns(this.items, columns.childNodes, heights);
     }
 
     this.removeColumns();
