@@ -292,7 +292,7 @@ Quartz.prototype = {
     column.style.left = '-10000px';
     column.style.top = '-10000px';
 
-    if (liveColumn) {
+    if (liveColumn && liveColumn.className === this.columnClass) {
       column.style.width = window.getComputedStyle(liveColumn).width;
     }
 
