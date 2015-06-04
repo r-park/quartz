@@ -1,17 +1,15 @@
 {
   "name": "quartz-layout",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Quartz is a responsive javascript column layout library.",
   "homepage": "https://github.com/r-park/quartz",
   "repository": "https://github.com/r-park/quartz.git",
   "author": "Richard Park",
   "license": "MIT",
-
   "scripts": {
     "test": "./node_modules/karma/bin/karma start --single-run --coverage",
     "coveralls": "gulp coveralls && rm -rf ./coverage"
   },
-
   "devDependencies": {
     "browser-sync": "^2.7.6",
     "del": "^1.2.0",
@@ -36,7 +34,6 @@
     "karma-safari-launcher": "^0.1.1",
     "sass-lib": "git://github.com/r-park/sass-lib.git"
   },
-
   "keywords": [
     "quartz",
     "columns",

@@ -1,4 +1,4 @@
-/* quartz-layout v0.1.0 - 2015-06-03T22:50:13.701Z - https://github.com/r-park/quartz */
+/* quartz-layout v0.1.1 - 2015-06-04T04:19:52.298Z - https://github.com/r-park/quartz */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define([], factory);
@@ -132,12 +132,15 @@ Quartz.prototype = {
   update : function(numColumns) {
     if (numColumns) this.columnCount = numColumns;
 
-    var columns = this.createColumns(),
-        heights = this.getExistingItemHeights();
+    var columns = this.createColumns();
 
     this.resetYIndices();
+
+    if (this.items.length) {
+      this.distributeItemsToColumns(this.items, columns.childNodes, this.getExistingItemHeights());
+    }
+
     this.removeColumns();
-    this.distributeItemsToColumns(this.items, columns.childNodes, heights);
     this.container.appendChild(columns);
   },
 
@@ -150,14 +153,12 @@ Quartz.prototype = {
   distributeItemsToColumns : function(items, columns, heights) {
     var count = items.length,
         yIndices = this.yIndices,
-        columnIndex,
-        item;
+        columnIndex;
 
     for (var i = 0; i < count; i++) {
       columnIndex = this.getColumnIndex();
-      item = items[i];
       yIndices[columnIndex] += heights[i];
-      columns[columnIndex].appendChild(item);
+      columns[columnIndex].appendChild(items[i]);
     }
   },
 
@@ -176,12 +177,15 @@ Quartz.prototype = {
    */
   getExistingItemHeights : function() {
     var items = this.items,
-        heights = [],
-        style = window.getComputedStyle(items[0]),
-        marginBottom = parseInt(style.marginBottom, 10);
+        heights = [];
 
-    for (var i = 0, l = items.length; i < l; i++) {
-      heights.push(items[i].offsetHeight + marginBottom);
+    if (items.length) {
+      var style = window.getComputedStyle(items[0]),
+          marginBottom = parseInt(style.marginBottom, 10);
+
+      for (var i = 0, l = items.length; i < l; i++) {
+        heights.push(items[i].offsetHeight + marginBottom);
+      }
     }
 
     return heights;
@@ -193,31 +197,25 @@ Quartz.prototype = {
    * @returns {number[]}
    */
   getItemHeights : function(items) {
-    var temp = document.createElement('div');
-    temp.className = this.columnClass;
-    temp.style.position = 'absolute';
-    temp.style.left = '-10000px';
-    temp.style.top = '-10000px';
-    temp.style.width = window.getComputedStyle(this.container.firstChild).width;
-
-    var heights = [],
+    var testColumn = this.createTestColumn(),
+        heights = [],
         i = 0,
         l = items.length;
 
     for (i; i < l; i++) {
-      temp.appendChild(items[i]);
+      testColumn.appendChild(items[i]);
     }
 
-    this.container.appendChild(temp);
+    this.container.appendChild(testColumn);
 
-    var style = window.getComputedStyle(items[0]);
-    var marginBottom = parseInt(style.marginBottom, 10);
+    var style = window.getComputedStyle(items[0]),
+        marginBottom = parseInt(style.marginBottom, 10);
 
     for (i = 0; i < l; i++) {
       heights.push(items[i].offsetHeight + marginBottom);
     }
 
-    this.container.removeChild(temp);
+    this.container.removeChild(testColumn);
 
     return heights;
   },
@@ -257,14 +255,12 @@ Quartz.prototype = {
 
 
   /**
-   * @param {number} [count]
    * @returns {DocumentFragment}
    */
-  createColumns : function(count) {
-    var columns = document.createDocumentFragment(),
+  createColumns : function() {
+    var count = this.columnCount,
+        columns = document.createDocumentFragment(),
         column;
-
-    count = count || this.columnCount;
 
     while (count--) {
       column = document.createElement('div');
@@ -277,16 +273,34 @@ Quartz.prototype = {
 
 
   /**
-   * @param {number} [count]
    * @returns {DocumentFragment[]}
    */
-  createColumnFragments : function(count) {
-    var column = [];
-
-    count = count || this.columnCount;
+  createColumnFragments : function() {
+    var columns = [],
+        count = this.columnCount;
 
     while (count--) {
-      column.push(document.createDocumentFragment());
+      columns.push(document.createDocumentFragment());
+    }
+
+    return columns;
+  },
+
+
+  /**
+   * @returns {Element}
+   */
+  createTestColumn : function() {
+    var column = document.createElement('div'),
+        liveColumn = this.container.firstChild;
+
+    column.className = this.columnClass;
+    column.style.position = 'absolute';
+    column.style.left = '-10000px';
+    column.style.top = '-10000px';
+
+    if (liveColumn) {
+      column.style.width = window.getComputedStyle(liveColumn).width;
     }
 
     return column;
@@ -343,8 +357,7 @@ Quartz.prototype = {
 
     var mqlListener = function(mql) {
       if (mql.matches) {
-        that.columnCount = config.columns;
-        that.update();
+        that.update(config.columns);
       }
     };
 

@@ -1,16 +1,14 @@
 {
   "name": "quartz-layout",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Quartz is a responsive javascript column layout library.",
   "homepage": "https://github.com/r-park/quartz",
   "repository": "https://github.com/r-park/quartz.git",
   "author": "Richard Park",
   "license": "MIT",
-
   "dependencies": {
     "matchMedia": "*"
   },
-
   "ignore": [
     "**/.*",
     "gulpfile.js",
@@ -23,7 +21,6 @@
     "tmp",
     "vendor"
   ],
-
   "keywords": [
     "quartz",
     "columns",
@@ -32,7 +29,6 @@
     "responsive",
     "salvattore"
   ],
-
   "moduleType": [
     "amd",
     "globals",
