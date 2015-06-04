@@ -1,5 +1,14 @@
 # Quartz
-Quartz is a javascript utility for producing pinterest-style layouts that respond to media query changes.
+[Quartz](http://r-park.github.io/quartz/) is a javascript utility for producing responsive **pinterest**-style layouts.
+
+## Features
+- Balanced column heights
+- Append items
+- Prepend items
+- Remove items
+- Allows manual refresh of layout
+- Adjusts column count by reacting to MediaQueryList events
+- No dependencies for modern browsers (IE 9 requires a match-media polyfill)
 
 ## Installation
 **bower**
@@ -19,12 +28,6 @@ Define your HTML
   <div class="item">2</div>
   <div class="item">3</div>
 </div>
-```
-**For IE 9**, include the [provided](https://github.com/r-park/quartz/tree/master/dist) polyfill, which is a concatenated version of [matchMedia.js](https://github.com/paulirish/matchMedia.js)
-```html
-<!--[if lt IE 10]>
-<script src="match-media.js"></script>
-<![endif]-->
 ```
 Setup your CSS grid as you normally would — for example:
 ```css
@@ -46,7 +49,13 @@ Setup your CSS grid as you normally would — for example:
   }
 }
 ```
-Initialize Quartz with the media queries from your CSS grid
+**For IE 9**, include the [provided](https://github.com/r-park/quartz/tree/master/dist) `match-media.min.js` polyfill, which is a concatenated and minified copy of [matchMedia.js](https://github.com/paulirish/matchMedia.js).
+```html
+<!--[if lt IE 10]>
+<script src="match-media.min.js"></script>
+<![endif]-->
+```
+Initialize Quartz with the responsive media queries from your stylesheet
 ```javascript
 var config = {
   container: '.container',
@@ -80,23 +89,23 @@ config.container = $('#container')[0]
 ### config.items
 ```javascript
 // CSS selector
-config.container = '.items'
+config.items = '.item'
 
 // NodeList
-config.container = document.querySelectorAll('.items')
+config.items = document.querySelectorAll('.item')
 
 // jQuery
-config.container = $('.items')
+config.items = $('.item')
 ```
 ### config.columnClass
 ```javascript
 // CSS class(es) to be applied to columns
-config.columnClass = 'column'
+config.columnClass = 'column foo'
 ```
 ### config.mediaQueries
 ```javascript
 config.mediaQueries = [
-  // `query` should correspond to an @media rule in your CSS stylesheet
+  // `query` should correspond to an @media rule in your stylesheet
   {query: 'screen and (min-width: 40em) and (max-width: 49.9375em)', columns: 2}
 ]
 ```
@@ -107,6 +116,10 @@ config.mediaQueries = [
 // `items` as HTMLElement
 var item = document.querySelector('.item');
 quartz.append(item);
+
+// `items` as array of HTMLElement
+var items = [document.querySelector('#item-1'), document.querySelector('#item-2')];
+quartz.append(items);
 
 // `items` as NodeList
 var items = document.querySelectorAll('.item');
@@ -122,6 +135,10 @@ quartz.append($('.item'));
 var item = document.querySelector('.item');
 quartz.prepend(item);
 
+// `items` as array of HTMLElement
+var items = [document.querySelector('#item-1'), document.querySelector('#item-2')];
+quartz.prepend(items);
+
 // `items` as NodeList
 var items = document.querySelectorAll('.item');
 quartz.prepend(items);
@@ -135,6 +152,10 @@ quartz.prepend($('.item'));
 // `items` as HTMLElement
 var item = document.querySelector('.item');
 quartz.remove(item);
+
+// `items` as array of HTMLElement
+var items = [document.querySelector('#item-1'), document.querySelector('#item-2')];
+quartz.remove(items);
 
 // `items` as NodeList
 var items = document.querySelectorAll('.item');
