@@ -41,6 +41,8 @@ function Quartz(config) {
   else {
     this.update();
   }
+
+  this.initialized = true;
 }
 
 
@@ -127,7 +129,8 @@ Quartz.prototype = {
     this.resetYIndices();
 
     if (this.items.length) {
-      this.distributeItemsToColumns(this.items, columns.childNodes, this.getExistingItemHeights());
+      var heights = this.initialized ? this.getExistingItemHeights() : this.getItemHeights(this.items);
+      this.distributeItemsToColumns(this.items, columns.childNodes, heights);
     }
 
     this.removeColumns();
