@@ -165,6 +165,11 @@ quartz.remove(items);
 quartz.remove($('.item'));
 ```
 
+### quartz.removeAll()
+```javascript
+quartz.removeAll();
+```
+
 ### quartz.update([columnCount])
 ```javascript
 // manually refresh the current layout
