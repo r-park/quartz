@@ -1,4 +1,4 @@
-/* quartz-layout v0.1.3 - 2015-06-04T04:59:52.300Z - https://github.com/r-park/quartz */
+/* quartz-layout v0.1.4 - 2015-06-06T01:37:44.313Z - https://github.com/r-park/quartz */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define([], factory);
@@ -11,6 +11,9 @@
 'use strict';
 
 
+var $window = window,
+    $document = document;
+
 var isArray = Array.isArray;
 
 
@@ -18,12 +21,12 @@ var isArray = Array.isArray;
  * @name Quartz
  * @constructor
  *
- * @param {{}}              config
- * @param {string}          config.columnClass
- * @param {number}          [config.columnCount]
- * @param {Element|string}  config.container
- * @param {NodeList|string} config.items
- * @param {Array}           [config.mediaQueries]
+ * @param {{}} config
+ * @param {string} config.columnClass
+ * @param {number} [config.columnCount]
+ * @param {Element|string} config.container
+ * @param {Element|Element[]|jQuery|NodeList|string} config.items
+ * @param {Array} [config.mediaQueries]
  *
  */
 function Quartz(config) {
@@ -32,21 +35,21 @@ function Quartz(config) {
   this.yIndices = [];
 
   if (typeof config.container === 'string') {
-    this.container = document.querySelector(config.container);
+    this.container = $document.querySelector(config.container);
   }
   else {
     this.container = config.container;
   }
 
   if (typeof config.items === 'string') {
-    this.items = this.toArray(document.querySelectorAll(config.items));
+    this.items = this.toArray($document.querySelectorAll(config.items));
   }
   else {
     this.items = this.toArray(config.items);
   }
 
-  if (config.mediaQueries && window.matchMedia) {
-    this.bindToMediaQueries(config.mediaQueries);
+  if (config.mediaQueries && $window.matchMedia) {
+    this.bindMediaQueries(config.mediaQueries);
   }
   else {
     this.update();
@@ -58,6 +61,10 @@ function Quartz(config) {
 
 Quartz.prototype = {
 
+  /*=================================================================
+    Public API
+  =================================================================*/
+
   /**
    * @param {Element|Element[]|NodeList} items
    */
@@ -66,16 +73,17 @@ Quartz.prototype = {
       items = [items];
     }
 
-    var container   = this.container,
+    var columnCount = this.columnCount,
         columns     = this.createColumnFragments(),
-        columnCount = this.columnCount,
-        heights     = this.getItemHeights(items);
+        container   = this.container,
+        heights     = this.getItemHeights(items),
+        liveColumns = container.children;
 
     this.refreshYIndices();
-    this.distributeItemsToColumns(items, columns, heights);
+    this.distributeItemsToColumns(columns, items, heights);
 
     for (var i = 0; i < columnCount; i++) {
-      container.children[i].appendChild(columns[i]);
+      liveColumns[i].appendChild(columns[i]);
     }
 
     this.items = this.items.concat(this.toArray(items));
@@ -86,20 +94,18 @@ Quartz.prototype = {
    * @param {Element|Element[]|NodeList} items
    */
   prepend : function(items) {
-    if (typeof items.length === 'undefined') {
-      items = [items];
-    }
+    items = this.toArray(items);
 
     var columns  = this.createColumns(),
         heights1 = this.getItemHeights(items),
         heights2 = this.getExistingItemHeights(),
         heights  = heights1.concat(heights2);
 
-    items = this.toArray(items).concat(this.items);
+    items = items.concat(this.items);
 
     this.resetYIndices();
-    this.removeColumns();
-    this.distributeItemsToColumns(items, columns.childNodes, heights);
+    this.clearContainer();
+    this.distributeItemsToColumns(columns.childNodes, items, heights);
     this.container.appendChild(columns);
     this.items = items;
   },
@@ -129,31 +135,116 @@ Quartz.prototype = {
 
 
   /**
+   *
+   */
+  removeAll : function() {
+    this.items.length = 0;
+    this.update();
+  },
+
+
+  /**
    * @param {number} [numColumns]
    */
   update : function(numColumns) {
     if (numColumns) this.columnCount = numColumns;
 
-    var columns = this.createColumns();
+    var columns = this.createColumns(),
+        items = this.items,
+        heights;
 
     this.resetYIndices();
 
-    if (this.items.length) {
-      var heights = this.initialized ? this.getExistingItemHeights() : this.getItemHeights(this.items);
-      this.distributeItemsToColumns(this.items, columns.childNodes, heights);
+    if (items.length) {
+      heights = this.initialized ? this.getExistingItemHeights() : this.getItemHeights(items);
+      this.clearContainer();
+      this.distributeItemsToColumns(columns.childNodes, items, heights);
+    }
+    else {
+      this.clearContainer();
     }
 
-    this.removeColumns();
     this.container.appendChild(columns);
   },
 
 
+
+  /*=================================================================
+    Internal
+  =================================================================*/
+
   /**
-   * @param {Element[]|NodeList} items
+   *
+   */
+  clearContainer : function() {
+    var container = this.container;
+
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
+  },
+
+
+  /**
+   * @returns {DocumentFragment[]}
+   */
+  createColumnFragments : function() {
+    var fragments = [],
+        count = this.columnCount;
+
+    while (count--) {
+      fragments.push($document.createDocumentFragment());
+    }
+
+    return fragments;
+  },
+
+
+  /**
+   * @returns {DocumentFragment} with <div> child nodes
+   */
+  createColumns : function() {
+    var count = this.columnCount,
+        columnClass = this.columnClass,
+        columns = $document.createDocumentFragment(),
+        column;
+
+    while (count--) {
+      column = $document.createElement('div');
+      column.className = columnClass;
+      columns.appendChild(column);
+    }
+
+    return columns;
+  },
+
+
+  /**
+   * @returns {Element}
+   */
+  createTestColumn : function() {
+    var liveColumn = this.container.firstChild,
+        testColumn = $document.createElement('div');
+
+    testColumn.className = this.columnClass;
+    testColumn.style.position = 'absolute';
+    testColumn.style.left = '-10000px';
+    testColumn.style.top = '-10000px';
+
+    if (liveColumn && liveColumn.className === this.columnClass) {
+      testColumn.style.width = $window.getComputedStyle(liveColumn).width;
+    }
+
+    return testColumn;
+  },
+
+
+  /**
    * @param {DocumentFragment[]|NodeList} columns
+   * @param {Element[]|NodeList} items
    * @param {number[]} heights
    */
-  distributeItemsToColumns : function(items, columns, heights) {
+  distributeItemsToColumns : function(columns, items, heights) {
     var count = items.length,
         yIndices = this.yIndices,
         columnIndex;
@@ -183,7 +274,7 @@ Quartz.prototype = {
         heights = [];
 
     if (items.length) {
-      var style = window.getComputedStyle(items[0]),
+      var style = $window.getComputedStyle(items[0]),
           marginBottom = parseInt(style.marginBottom, 10);
 
       for (var i = 0, l = items.length; i < l; i++) {
@@ -211,7 +302,7 @@ Quartz.prototype = {
 
     this.container.appendChild(testColumn);
 
-    var style = window.getComputedStyle(items[0]),
+    var style = $window.getComputedStyle(items[0]),
         marginBottom = parseInt(style.marginBottom, 10);
 
     for (i = 0; i < l; i++) {
@@ -243,7 +334,7 @@ Quartz.prototype = {
 
 
   /**
-   *
+   * @returns {number[]}
    */
   resetYIndices : function() {
     var count = this.columnCount,
@@ -253,71 +344,6 @@ Quartz.prototype = {
 
     while (count--) {
       yIndices.push(0);
-    }
-  },
-
-
-  /**
-   * @returns {DocumentFragment}
-   */
-  createColumns : function() {
-    var count = this.columnCount,
-        columns = document.createDocumentFragment(),
-        column;
-
-    while (count--) {
-      column = document.createElement('div');
-      column.className = this.columnClass;
-      columns.appendChild(column);
-    }
-
-    return columns;
-  },
-
-
-  /**
-   * @returns {DocumentFragment[]}
-   */
-  createColumnFragments : function() {
-    var columns = [],
-        count = this.columnCount;
-
-    while (count--) {
-      columns.push(document.createDocumentFragment());
-    }
-
-    return columns;
-  },
-
-
-  /**
-   * @returns {Element}
-   */
-  createTestColumn : function() {
-    var column = document.createElement('div'),
-        liveColumn = this.container.firstChild;
-
-    column.className = this.columnClass;
-    column.style.position = 'absolute';
-    column.style.left = '-10000px';
-    column.style.top = '-10000px';
-
-    if (liveColumn && liveColumn.className === this.columnClass) {
-      column.style.width = window.getComputedStyle(liveColumn).width;
-    }
-
-    return column;
-  },
-
-
-  /**
-   *
-   */
-  removeColumns : function() {
-    var container = this.container;
-
-    while (container.firstChild) {
-      container.removeChild(container.firstChild);
     }
   },
 
@@ -344,29 +370,40 @@ Quartz.prototype = {
   /**
    * @param {{query:string, columns:number}[]} mediaQueries
    */
-  bindToMediaQueries : function(mediaQueries) {
-    var i = mediaQueries.length;
-    while (i--) {
-      this.bindToMediaQueryList(mediaQueries[i]);
+  bindMediaQueries : function(mediaQueries) {
+    var matched = false,
+        config,
+        mediaQueryList,
+        mqlListener;
+
+    for (var i = 0, l = mediaQueries.length; i < l; i++) {
+      config = mediaQueries[i];
+      mediaQueryList = $window.matchMedia(config.query);
+      mqlListener = this.bindToMediaQueryList(mediaQueryList, config, this);
+
+      if (!matched && mediaQueryList.matches) {
+        matched = true;
+        mqlListener(mediaQueryList);
+      }
     }
   },
 
 
   /**
+   * @param {MediaQueryList} mediaQueryList
    * @param {{query:string, columns:number}} config
+   * @param {Quartz} quartz
+   * @returns {Function}
    */
-  bindToMediaQueryList : function(config) {
-    var that = this;
-
+  bindToMediaQueryList : function(mediaQueryList, config, quartz) {
     var mqlListener = function(mql) {
       if (mql.matches) {
-        that.update(config.columns);
+        quartz.update(config.columns);
       }
     };
 
-    var mediaQueryList = window.matchMedia(config.query);
     mediaQueryList.addListener(mqlListener);
-    mqlListener(mediaQueryList);
+    return mqlListener;
   }
 
 };
