@@ -11,23 +11,23 @@
   },
   "ignore": [
     "**/.*",
-    "gulpfile.js",
-    "karma.conf.js",
+    "coverage",
     "node_modules",
-    "package.json",
     "src",
     "target",
     "test",
     "tmp",
-    "vendor"
+    "vendor",
+    "gulpfile.js",
+    "karma.conf.js",
+    "package.json"
   ],
   "keywords": [
     "quartz",
     "columns",
     "layout",
     "masonry",
-    "responsive",
-    "salvattore"
+    "responsive"
   ],
   "moduleType": [
     "amd",

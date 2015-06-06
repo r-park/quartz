@@ -8,7 +8,6 @@ var browserSync = require('browser-sync'),
     header      = require('gulp-header'),
     karma       = require('karma').server,
     rename      = require('gulp-rename'),
-    sass        = require('gulp-sass'),
     sourcemaps  = require('gulp-sourcemaps'),
     uglify      = require('gulp-uglify'),
     umd         = require('gulp-umd');
@@ -33,17 +32,6 @@ gulp.task('bump:minor', function(){
 
 gulp.task('clean:dist', function(done){
   del('./dist/*', done);
-});
-
-
-gulp.task('clean:target', function(done){
-  del('./target/*', done);
-});
-
-
-gulp.task('copy', function(){
-  return gulp.src(['./src/**/*.html', './src/**/*.js'])
-    .pipe(gulp.dest('./target'));
 });
 
 
@@ -104,8 +92,8 @@ gulp.task('sync', function(){
   browserSync
     .create()
     .init({
-      browser: "firefox",
-      files: ['target/**/*'],
+      browser: 'firefox',
+      files: ['src/**/*'],
       port: 7000,
       server: {
         baseDir: '.'
@@ -136,9 +124,3 @@ gulp.task('build', gulp.series('lint', 'clean:dist', 'process', 'matchmedia', 'u
 
 gulp.task('dist:patch', gulp.series('bump', 'build'));
 gulp.task('dist:minor', gulp.series('bump:minor', 'build'));
-
-
-gulp.task('default', gulp.series('clean:target', 'copy', 'sass', function watch(){
-  gulp.watch('./src/**/*.scss', gulp.task('sass'));
-  gulp.watch(['./src/**/*.html', './src/**/*.js'], gulp.task('copy'));
-}));

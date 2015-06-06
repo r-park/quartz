@@ -1,6 +1,9 @@
 'use strict';
 
 
+var $window = window,
+    $document = document;
+
 var isArray = Array.isArray;
 
 
@@ -8,12 +11,12 @@ var isArray = Array.isArray;
  * @name Quartz
  * @constructor
  *
- * @param {{}}              config
- * @param {string}          config.columnClass
- * @param {number}          [config.columnCount]
- * @param {Element|string}  config.container
- * @param {NodeList|string} config.items
- * @param {Array}           [config.mediaQueries]
+ * @param {{}} config
+ * @param {string} config.columnClass
+ * @param {number} [config.columnCount]
+ * @param {Element|string} config.container
+ * @param {Element|Element[]|jQuery|NodeList|string} config.items
+ * @param {Array} [config.mediaQueries]
  *
  */
 function Quartz(config) {
@@ -22,20 +25,20 @@ function Quartz(config) {
   this.yIndices = [];
 
   if (typeof config.container === 'string') {
-    this.container = document.querySelector(config.container);
+    this.container = $document.querySelector(config.container);
   }
   else {
     this.container = config.container;
   }
 
   if (typeof config.items === 'string') {
-    this.items = this.toArray(document.querySelectorAll(config.items));
+    this.items = this.toArray($document.querySelectorAll(config.items));
   }
   else {
     this.items = this.toArray(config.items);
   }
 
-  if (config.mediaQueries && window.matchMedia) {
+  if (config.mediaQueries && $window.matchMedia) {
     this.bindMediaQueries(config.mediaQueries);
   }
   else {
@@ -67,7 +70,7 @@ Quartz.prototype = {
         liveColumns = container.children;
 
     this.refreshYIndices();
-    this.distributeItemsToColumns(items, columns, heights);
+    this.distributeItemsToColumns(columns, items, heights);
 
     for (var i = 0; i < columnCount; i++) {
       liveColumns[i].appendChild(columns[i]);
@@ -92,7 +95,7 @@ Quartz.prototype = {
 
     this.resetYIndices();
     this.clearContainer();
-    this.distributeItemsToColumns(items, columns.childNodes, heights);
+    this.distributeItemsToColumns(columns.childNodes, items, heights);
     this.container.appendChild(columns);
     this.items = items;
   },
@@ -145,7 +148,7 @@ Quartz.prototype = {
     if (items.length) {
       heights = this.initialized ? this.getExistingItemHeights() : this.getItemHeights(items);
       this.clearContainer();
-      this.distributeItemsToColumns(items, columns.childNodes, heights);
+      this.distributeItemsToColumns(columns.childNodes, items, heights);
     }
     else {
       this.clearContainer();
@@ -155,8 +158,9 @@ Quartz.prototype = {
   },
 
 
+
   /*=================================================================
-    Private
+    Internal
   =================================================================*/
 
   /**
@@ -179,7 +183,7 @@ Quartz.prototype = {
         count = this.columnCount;
 
     while (count--) {
-      fragments.push(document.createDocumentFragment());
+      fragments.push($document.createDocumentFragment());
     }
 
     return fragments;
@@ -192,11 +196,11 @@ Quartz.prototype = {
   createColumns : function() {
     var count = this.columnCount,
         columnClass = this.columnClass,
-        columns = document.createDocumentFragment(),
+        columns = $document.createDocumentFragment(),
         column;
 
     while (count--) {
-      column = document.createElement('div');
+      column = $document.createElement('div');
       column.className = columnClass;
       columns.appendChild(column);
     }
@@ -210,7 +214,7 @@ Quartz.prototype = {
    */
   createTestColumn : function() {
     var liveColumn = this.container.firstChild,
-        testColumn = document.createElement('div');
+        testColumn = $document.createElement('div');
 
     testColumn.className = this.columnClass;
     testColumn.style.position = 'absolute';
@@ -218,7 +222,7 @@ Quartz.prototype = {
     testColumn.style.top = '-10000px';
 
     if (liveColumn && liveColumn.className === this.columnClass) {
-      testColumn.style.width = window.getComputedStyle(liveColumn).width;
+      testColumn.style.width = $window.getComputedStyle(liveColumn).width;
     }
 
     return testColumn;
@@ -226,11 +230,11 @@ Quartz.prototype = {
 
 
   /**
-   * @param {Element[]|NodeList} items
    * @param {DocumentFragment[]|NodeList} columns
+   * @param {Element[]|NodeList} items
    * @param {number[]} heights
    */
-  distributeItemsToColumns : function(items, columns, heights) {
+  distributeItemsToColumns : function(columns, items, heights) {
     var count = items.length,
         yIndices = this.yIndices,
         columnIndex;
@@ -260,7 +264,7 @@ Quartz.prototype = {
         heights = [];
 
     if (items.length) {
-      var style = window.getComputedStyle(items[0]),
+      var style = $window.getComputedStyle(items[0]),
           marginBottom = parseInt(style.marginBottom, 10);
 
       for (var i = 0, l = items.length; i < l; i++) {
@@ -288,7 +292,7 @@ Quartz.prototype = {
 
     this.container.appendChild(testColumn);
 
-    var style = window.getComputedStyle(items[0]),
+    var style = $window.getComputedStyle(items[0]),
         marginBottom = parseInt(style.marginBottom, 10);
 
     for (i = 0; i < l; i++) {
@@ -320,7 +324,7 @@ Quartz.prototype = {
 
 
   /**
-   *
+   * @returns {number[]}
    */
   resetYIndices : function() {
     var count = this.columnCount,
@@ -357,27 +361,39 @@ Quartz.prototype = {
    * @param {{query:string, columns:number}[]} mediaQueries
    */
   bindMediaQueries : function(mediaQueries) {
+    var matched = false,
+        config,
+        mediaQueryList,
+        mqlListener;
+
     for (var i = 0, l = mediaQueries.length; i < l; i++) {
-      this.bindToMediaQueryList(mediaQueries[i]);
+      config = mediaQueries[i];
+      mediaQueryList = $window.matchMedia(config.query);
+      mqlListener = this.bindToMediaQueryList(mediaQueryList, config, this);
+
+      if (!matched && mediaQueryList.matches) {
+        matched = true;
+        mqlListener(mediaQueryList);
+      }
     }
   },
 
 
   /**
+   * @param {MediaQueryList} mediaQueryList
    * @param {{query:string, columns:number}} config
+   * @param {Quartz} quartz
+   * @returns {Function}
    */
-  bindToMediaQueryList : function(config) {
-    var that = this;
-
+  bindToMediaQueryList : function(mediaQueryList, config, quartz) {
     var mqlListener = function(mql) {
       if (mql.matches) {
-        that.update(config.columns);
+        quartz.update(config.columns);
       }
     };
 
-    var mediaQueryList = window.matchMedia(config.query);
     mediaQueryList.addListener(mqlListener);
-    mqlListener(mediaQueryList);
+    return mqlListener;
   }
 
 };

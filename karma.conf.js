@@ -21,11 +21,17 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'fixture'],
 
 
     // list of files / patterns to load in the browser
-    files: [],
+    files: [
+      'node_modules/jquery/dist/jquery.min.js',
+      'node_modules/sinon/pkg/sinon.js',
+      'src/quartz.js',
+      'test/quartz.spec.js',
+      'test/fixtures/*.html'
+    ],
 
 
     // list of files to exclude
@@ -34,7 +40,9 @@ module.exports = function(config) {
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {},
+    preprocessors: {
+      'test/fixtures/*.html': ['html2js']
+    },
 
 
     // test results reporter to use
@@ -59,7 +67,7 @@ module.exports = function(config) {
 
   // additional options for coverage
   if (process.argv.indexOf('--coverage') !== -1) {
-    options.preprocessors['src/imagesready.js'] = 'coverage';
+    options.preprocessors['src/quartz.js'] = 'coverage';
     options.reporters.push('coverage');
     options.coverageReporter = {
       type : 'lcov',

@@ -1,0 +1,41 @@
+<style>
+  .container {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 930px;
+  }
+  .container:before,
+  .container:after {
+    content: '';
+    display: table;
+  }
+  .container:after {
+    clear: both;
+  }
+  .column {
+    float: left;
+    position: relative;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 33.3333333333%;
+  }
+  .item {
+    margin-bottom: 20px;
+  }
+  .item--small {
+    height: 100px;
+  }
+  .item--medium {
+    height: 220px;
+  }
+  .item--large {
+    height: 340px;
+  }
+</style>
+
+<div class="container">
+  <div class="item item--medium"></div>
+  <div class="item item--large"></div>
+  <div class="item item--small"></div>
+</div>
