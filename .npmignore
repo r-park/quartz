@@ -18,6 +18,7 @@ vendor/
 #---------------------------------
 # Files
 #---------------------------------
+.bowerrc
 .eslintrc
 .travis.yml
 bower.json
