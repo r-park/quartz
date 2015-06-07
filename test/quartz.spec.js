@@ -175,7 +175,7 @@ describe("Quartz", function(){
 
       var quartz = new Quartz(config);
 
-      expect(quartz.columnCount).toBe(config.columnCount);
+      expect(quartz.columnCount > 0).toBe(true);
     });
 
     it("should set `yIndices`", function(){
@@ -200,6 +200,8 @@ describe("Quartz", function(){
     it("should append item to layout", function(){
       fixture.load('container-with-items-styled.html');
 
+      config.mediaQueries = null; // null to force columnCount to be config.columnCount
+
       var quartz = new Quartz(config);
       var columns = quartz.container.querySelectorAll(columnSelector);
       var item = smallItem();
@@ -212,6 +214,8 @@ describe("Quartz", function(){
 
     it("should append multiple {HTMLElement[]} items to layout", function(){
       fixture.load('container-with-items-styled.html');
+
+      config.mediaQueries = null; // null to force columnCount to be config.columnCount
 
       var quartz = new Quartz(config);
       var columns = quartz.container.querySelectorAll(columnSelector);
@@ -234,6 +238,8 @@ describe("Quartz", function(){
 
     it("should append multiple {NodeList} items to layout", function(){
       fixture.load('container-with-items-styled.html');
+
+      config.mediaQueries = null; // null to force columnCount to be config.columnCount
 
       var quartz = new Quartz(config);
       var columns = quartz.container.querySelectorAll(columnSelector);
@@ -276,6 +282,8 @@ describe("Quartz", function(){
     it("should prepend item to layout", function(){
       fixture.load('container-with-items-styled.html');
 
+      config.mediaQueries = null; // null to force columnCount to be config.columnCount
+
       var items = fixture.el.querySelectorAll(itemSelector);
       var item = smallItem();
 
@@ -293,6 +301,8 @@ describe("Quartz", function(){
 
     it("should prepend multiple {HTMLElement[]} items to layout", function(){
       fixture.load('container-with-items-styled.html');
+
+      config.mediaQueries = null; // null to force columnCount to be config.columnCount
 
       var quartz = new Quartz(config);
 
@@ -321,6 +331,8 @@ describe("Quartz", function(){
 
     it("should prepend multiple {NodeList} items to layout", function(){
       fixture.load('container-with-items-styled.html');
+
+      config.mediaQueries = null; // null to force columnCount to be config.columnCount
 
       var quartz = new Quartz(config);
 
@@ -507,6 +519,8 @@ describe("Quartz", function(){
       it("should update indices by querying heights of live columns", function(){
         fixture.load('container.html');
 
+        config.mediaQueries = null; // null to force columnCount to be config.columnCount
+
         var quartz = new Quartz(config);
         var columns = quartz.container.querySelectorAll(columnSelector);
 
@@ -533,6 +547,8 @@ describe("Quartz", function(){
     describe("resetYIndices()", function(){
       it("should set all indices to zero", function(){
         fixture.load('container.html');
+
+        config.mediaQueries = null; // null to force columnCount to be config.columnCount
 
         var quartz = new Quartz(config);
         quartz.yIndices = [10,20,30];

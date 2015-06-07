@@ -38,6 +38,8 @@ function Quartz(config) {
     this.items = this.toArray(config.items);
   }
 
+  // if `config.mediaQueries` is not defined, assume static
+  // non-responsive layout and skip MediaQueryList binding step.
   if (config.mediaQueries && $window.matchMedia) {
     this.bindMediaQueries(config.mediaQueries);
   }
