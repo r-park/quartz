@@ -123,6 +123,22 @@ Required
 - List media queries in order, from smallest to largest.
 - `max-width` is required for smallest size
 - Both `min-width` and `max-width` are required for intermediate sizes
+
+If your CSS looks like this:
+```css
+@media screen {
+  .column { width: 100%; } 
+}
+
+@media screen and (min-width: 40em) {
+  .column { width: 50%; }
+}
+
+@media screen and (min-width: 50em) {
+  .column { width: 33.3333333333%; }
+}
+```
+Your configuration should look like this:
 ```javascript
 config.mediaQueries = [
   {query: 'screen and (max-width: 39.99em)', columns: 1}, 
