@@ -29,11 +29,12 @@ npm install quartz-layout
 </div>
 ```
 
-**For IE 9 support**, include the [provided](https://github.com/r-park/quartz/tree/master/dist) `match-media.min.js` polyfill, which is a concatenated and minified copy of [matchMedia.js](https://github.com/paulirish/matchMedia.js).
+**Include the javascript files**. For IE 9 support, include the [provided](https://github.com/r-park/quartz/tree/master/dist) `match-media.min.js` polyfill, which is a concatenated and minified copy of [matchMedia.js](https://github.com/paulirish/matchMedia.js).
 ```html
 <!--[if lt IE 10]>
 <script src="match-media.min.js"></script>
 <![endif]-->
+<script src="quartz.min.js"></script>
 ```
 
 **Setup your CSS grid** as you normally would – for example:
