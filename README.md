@@ -127,15 +127,15 @@ Required
 If your CSS looks like this:
 ```css
 @media screen {
-  .column { width: 100%; } 
+  .column { width: 100%; } /* 1 column */
 }
 
 @media screen and (min-width: 40em) {
-  .column { width: 50%; }
+  .column { width: 50%; } /* 2 columns */
 }
 
 @media screen and (min-width: 50em) {
-  .column { width: 33.3333333333%; }
+  .column { width: 33.3333333333%; } /* 3 columns */
 }
 ```
 Your configuration should look like this:
