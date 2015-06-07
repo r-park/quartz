@@ -1,5 +1,5 @@
 # Quartz
-**[Quartz](http://r-park.github.io/quartz/)** is a javascript library for producing responsive **pinterest**-style layouts. Quartz prioritizes **balanced column heights** over strict item ordering. Try the [demo](http://r-park.github.io/quartz/).
+**[Quartz](http://r-park.github.io/quartz/)** is a javascript library for producing responsive **pinterest**-style layouts. Quartz prioritizes **balanced column heights** over strict item ordering. View the [example](http://r-park.github.io/quartz/).
 
 ## Features
 - API for **appending**, **prepending**, and **removing** items
@@ -36,16 +36,15 @@ npm install quartz-layout
 <![endif]-->
 ```
 
-**Setup your CSS grid** as you normally would. Intermediate media queries must be defined with both **min-width** and **max-width** settings.
+**Setup your CSS grid** as you normally would – for example:
 ```css
-@media screen and (max-width: 39.9375em) {
+@media screen {
   .column {
     width: 100%; 
   } 
 }
 
-/* Both min-width and max-width are required for intermediate media queries */
-@media screen and (min-width: 40em) and (max-width: 49.9375em) {
+@media screen and (min-width: 40em) {
   .column {
     width: 50%;
   }
@@ -58,15 +57,17 @@ npm install quartz-layout
 }
 ```
 
-Initialize Quartz with your desired media queries settings.
+Initialize Quartz with your configuration settings.
 ```javascript
 var config = {
   container: '.container',
   items: '.item',
   columnClass: 'column',
   mediaQueries: [
-    {query: 'screen and (max-width: 39.9375em)', columns: 1},
-    {query: 'screen and (min-width: 40em) and (max-width: 49.9375em)', columns: 2},
+    // max-width is required for smallest size
+    {query: 'screen and (max-width: 39.99em)', columns: 1}, 
+    // both min- and max-width are required for intermediate sizes
+    {query: 'screen and (min-width: 40em) and (max-width: 49.99em)', columns: 2},
     {query: 'screen and (min-width: 50em)', columns: 3}
   ]
 }
@@ -117,10 +118,15 @@ config.columnClass = 'column foo'
 
 ### config.mediaQueries
 Required
+
+- List media queries in order, from smallest to largest.
+- `max-width` is required for smallest size
+- Both `min-width` and `max-width` are required for intermediate sizes
 ```javascript
 config.mediaQueries = [
-  // `query` should correspond to an @media rule in your stylesheet
-  {query: 'screen and (min-width: 40em) and (max-width: 49.9375em)', columns: 2}
+  {query: 'screen and (max-width: 39.99em)', columns: 1}, 
+  {query: 'screen and (min-width: 40em) and (max-width: 49.99em)', columns: 2},
+  {query: 'screen and (min-width: 50em)', columns: 3}
 ]
 ```
 
@@ -167,19 +173,19 @@ quartz.prepend($('.item'));
 Remove the provided item(s) from the layout.
 ```javascript
 // `items` as a single HTMLElement
-var item = document.querySelector('.item');
+var item = document.querySelector('#item-4');
 quartz.remove(item);
 
 // `items` as an array of HTMLElement
-var items = [document.querySelector('#item-1'), document.querySelector('#item-2')];
+var items = [document.querySelector('#item-2'), document.querySelector('#item-6')];
 quartz.remove(items);
 
 // `items` as a NodeList
-var items = document.querySelectorAll('.item');
+var items = document.querySelectorAll('.item--disabled');
 quartz.remove(items);
 
 // `items` as jQuery
-quartz.remove($('.item'));
+quartz.remove($('.item--saved'));
 ```
 
 ### quartz.removeAll()
