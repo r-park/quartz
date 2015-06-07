@@ -1,4 +1,4 @@
-/* quartz-layout v0.1.4 - 2015-06-06T01:37:44.313Z - https://github.com/r-park/quartz */
+/* quartz-layout v0.1.5 - 2015-06-07T23:32:41.112Z - https://github.com/r-park/quartz */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define([], factory);
@@ -48,6 +48,8 @@ function Quartz(config) {
     this.items = this.toArray(config.items);
   }
 
+  // if `config.mediaQueries` is not defined, assume static
+  // non-responsive layout and skip MediaQueryList binding step.
   if (config.mediaQueries && $window.matchMedia) {
     this.bindMediaQueries(config.mediaQueries);
   }

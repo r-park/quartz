@@ -1,7 +1,7 @@
 {
   "name": "quartz-layout",
-  "version": "0.1.4",
-  "description": "Quartz is a responsive javascript column layout library.",
+  "version": "0.1.5",
+  "description": "Quartz is a responsive javascript column layout utility.",
   "homepage": "https://github.com/r-park/quartz",
   "repository": "https://github.com/r-park/quartz.git",
   "author": "Richard Park",
