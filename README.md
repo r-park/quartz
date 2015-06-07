@@ -15,7 +15,7 @@
 ## Installation
 **bower**
 ```
-bower install quartz-layout
+bower install quartz
 ```
 **npm**
 ```
