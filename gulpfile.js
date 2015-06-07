@@ -76,18 +76,6 @@ gulp.task('process', function(){
 });
 
 
-gulp.task('sass', function(){
-  return gulp.src('./src/*.scss')
-    .pipe(sass({
-      errLogToConsole: true,
-      outputStyle: 'nested',
-      precision: 10,
-      sourceComments: false
-    }))
-    .pipe(gulp.dest('./target'));
-});
-
-
 gulp.task('sync', function(){
   browserSync
     .create()
