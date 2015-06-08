@@ -107,7 +107,7 @@ gulp.task('uglify', function(){
 });
 
 
-gulp.task('build', gulp.series('lint', 'clean:dist', 'process', 'matchmedia', 'uglify', 'headers'));
+gulp.task('build', gulp.series('lint', 'test', 'clean:dist', 'process', 'matchmedia', 'uglify', 'headers'));
 
 
 gulp.task('dist:patch', gulp.series('bump', 'build'));
