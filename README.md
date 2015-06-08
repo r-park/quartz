@@ -2,7 +2,10 @@
 [![Coverage Status](https://coveralls.io/repos/r-park/quartz/badge.svg?branch=master)](https://coveralls.io/r/r-park/quartz?branch=master)
 
 # Quartz
-**<a href="http://r-park.github.io/quartz/" target="_blank">Quartz</a>** is a javascript utility for producing responsive **pinterest**-style layouts. Quartz prioritizes **balanced column heights** over strict item ordering. View the <a href="http://r-park.github.io/quartz/" target="_blank">example</a>.
+**<a href="http://r-park.github.io/quartz/" target="_blank">Quartz</a>** is a javascript utility for producing responsive **pinterest**-style layouts. Quartz prioritizes **balanced column heights** over strict item ordering. 
+
+- View text <a href="http://r-park.github.io/quartz/" target="_blank">example</a>
+- View image pre-loading <a href="http://r-park.github.io/quartz/images-example.html" target="_blank">example</a>
 
 ## Features
 - API for **appending**, **prepending**, and **removing** items
@@ -77,6 +80,29 @@ var config = {
 }
 
 var quartz = new Quartz(config)
+```
+
+## Using Quartz with images
+In order for Quartz to maintain balanced column heights, images must be pre-loaded so that their heights can be included in the overall item height calculations.
+
+One way to accomplish this is to use a utility like <a href="https://github.com/r-park/images-ready" target="_blank">ImagesReady</a>. For example:
+
+```javascript
+$('.item')
+    .imagesReady()
+    .then(function(items){ // `items` is $('.item')
+      // instantiate Quartz
+      quartz = new Quartz({
+        container: '.items',
+        items: items,
+        columnClass: 'items__column column',
+        mediaQueries: [
+          {query: 'screen and (max-width: 39.99em)', columns: 1},
+          {query: 'screen and (min-width: 40em) and (max-width: 49.99em)', columns: 2},
+          {query: 'screen and (min-width: 50em)', columns: 3}
+        ]
+      });
+    });
 ```
 
 ## Configuration Options
