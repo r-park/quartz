@@ -1,4 +1,4 @@
-/* quartz-layout v0.1.8 - 2015-06-08T03:43:45.335Z - https://github.com/r-park/quartz */
+/* quartz-layout v0.1.9 - 2015-06-09T00:54:25.890Z - https://github.com/r-park/quartz */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define([], factory);

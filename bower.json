@@ -1,6 +1,6 @@
 {
   "name": "quartz",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Quartz is a javascript utility for producing responsive pinterest-style layouts with balanced column heights.",
   "homepage": "https://github.com/r-park/quartz",
   "repository": "https://github.com/r-park/quartz.git",
