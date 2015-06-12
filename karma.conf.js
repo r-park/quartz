@@ -71,7 +71,7 @@ module.exports = function(config) {
     options.reporters.push('coverage');
     options.coverageReporter = {
       type : 'lcov',
-      dir  : 'coverage'
+      dir  : 'tmp/coverage'
     }
   }
 

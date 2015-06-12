@@ -36,7 +36,7 @@ gulp.task('clean:dist', function(done){
 
 
 gulp.task('coveralls', function() {
-  return gulp.src('./coverage/**/lcov.info')
+  return gulp.src('./tmp/coverage/**/lcov.info')
     .pipe(coveralls());
 });
 

@@ -10,7 +10,6 @@
     "matchMedia": "*"
   },
   "ignore": [
-    "**/.*",
     "coverage",
     "node_modules",
     "src",
@@ -18,6 +17,7 @@
     "test",
     "tmp",
     "vendor",
+    "**/.*",
     "gulpfile.js",
     "karma.conf.js",
     "package.json"
