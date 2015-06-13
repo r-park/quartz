@@ -1,7 +1,7 @@
 {
   "name": "quartz",
-  "version": "0.1.9",
-  "description": "Quartz is a javascript utility for producing responsive pinterest-style layouts with balanced column heights.",
+  "version": "0.1.10",
+  "description": "Responsive pinterest-style layouts with balanced column heights.",
   "homepage": "https://github.com/r-park/quartz",
   "repository": "https://github.com/r-park/quartz.git",
   "author": "Richard Park",
@@ -27,7 +27,8 @@
     "columns",
     "layout",
     "masonry",
-    "responsive"
+    "responsive",
+    "salvattore"
   ],
   "moduleType": [
     "amd",

@@ -1,7 +1,7 @@
 {
   "name": "quartz-layout",
-  "version": "0.1.9",
-  "description": "Quartz is a javascript utility for producing responsive pinterest-style layouts with balanced column heights.",
+  "version": "0.1.10",
+  "description": "Responsive pinterest-style layouts with balanced column heights.",
   "homepage": "https://github.com/r-park/quartz",
   "repository": "https://github.com/r-park/quartz.git",
   "author": "Richard Park",
@@ -11,13 +11,13 @@
     "coveralls": "gulp coveralls && rm -rf ./tmp"
   },
   "devDependencies": {
-    "browser-sync": "^2.7.6",
+    "browser-sync": "^2.7.10",
     "del": "^1.2.0",
     "gulp": "gulpjs/gulp.git#4.0",
     "gulp-bump": "^0.3.1",
     "gulp-concat": "^2.5.2",
     "gulp-coveralls": "^0.1.4",
-    "gulp-eslint": "^0.12.0",
+    "gulp-eslint": "^0.13.2",
     "gulp-header": "^1.2.2",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.5.2",
@@ -25,22 +25,23 @@
     "gulp-umd": "^0.2.0",
     "jasmine-core": "^2.3.4",
     "jquery": "*",
-    "karma": "^0.12.35",
+    "karma": "^0.12.36",
     "karma-chrome-launcher": "^0.1.12",
-    "karma-coverage": "^0.3.1",
+    "karma-coverage": "^0.4.2",
     "karma-firefox-launcher": "^0.1.6",
     "karma-fixture": "^0.2.5",
     "karma-html2js-preprocessor": "^0.1.0",
-    "karma-ie-launcher": "^0.1.5",
+    "karma-ie-launcher": "^0.2.0",
     "karma-jasmine": "^0.3.5",
     "karma-safari-launcher": "^0.1.1",
-    "sinon": "^1.14.1"
+    "sinon": "^1.15.3"
   },
   "keywords": [
     "quartz",
     "columns",
     "layout",
     "masonry",
-    "responsive"
+    "responsive",
+    "salvattore"
   ]
 }
