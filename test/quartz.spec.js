@@ -603,7 +603,6 @@ describe("Quartz", function(){
     it("should call `update()` when listener is invoked with matching MediaQueryList", function(){
       fixture.load('container.html');
 
-      var configMediaQueries = config.mediaQueries;
       config.mediaQueries = null;
 
       var quartz = new Quartz(config);
@@ -627,7 +626,6 @@ describe("Quartz", function(){
     it("should call `update()` with new column count", function(){
       fixture.load('container.html');
 
-      var configMediaQueries = config.mediaQueries;
       config.mediaQueries = null;
 
       var quartz = new Quartz(config);
