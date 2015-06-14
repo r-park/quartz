@@ -10,7 +10,6 @@
     "matchMedia": "*"
   },
   "ignore": [
-    "coverage",
     "node_modules",
     "src",
     "target",
