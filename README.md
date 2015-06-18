@@ -93,7 +93,7 @@ $('.item')
     .then(function(items){ // `items` is $('.item')
       // instantiate Quartz
       quartz = new Quartz({
-        container: '.items',
+        container: '.container',
         items: items,
         columnClass: 'items__column column',
         mediaQueries: [
