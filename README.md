@@ -1,8 +1,9 @@
 [![Build Status](https://travis-ci.org/r-park/quartz.svg?branch=master)](https://travis-ci.org/r-park/quartz)
 [![Coverage Status](https://coveralls.io/repos/r-park/quartz/badge.svg?branch=master)](https://coveralls.io/r/r-park/quartz?branch=master)
+[![npm version](https://badge.fury.io/js/quartz-layout.svg)](http://badge.fury.io/js/quartz-layout)
 
 # Quartz
-**<a href="http://r-park.github.io/quartz/" target="_blank">Quartz</a>** is a javascript utility for producing responsive **pinterest**-style layouts. Quartz prioritizes **balanced column heights** over strict item ordering. 
+**<a href="http://r-park.github.io/quartz/" target="_blank">Quartz</a>** is a javascript utility for producing responsive **pinterest**-style layouts. Quartz prioritizes **balanced column heights** over strict item ordering.
 
 - View text <a href="http://r-park.github.io/quartz/" target="_blank">example</a>
 - View image pre-loading <a href="http://r-park.github.io/quartz/images-example.html" target="_blank">example</a>
@@ -47,8 +48,8 @@ npm install quartz-layout
 ```css
 @media screen {
   .column {
-    width: 100%; 
-  } 
+    width: 100%;
+  }
 }
 
 @media screen and (min-width: 40em) {
@@ -72,7 +73,7 @@ var config = {
   columnClass: 'column',
   mediaQueries: [
     // max-width is required for smallest size
-    {query: 'screen and (max-width: 39.99em)', columns: 1}, 
+    {query: 'screen and (max-width: 39.99em)', columns: 1},
     // both min- and max-width are required for intermediate sizes
     {query: 'screen and (min-width: 40em) and (max-width: 49.99em)', columns: 2},
     {query: 'screen and (min-width: 50em)', columns: 3}
@@ -170,7 +171,7 @@ If your CSS looks like this:
 Your configuration should look like this:
 ```javascript
 config.mediaQueries = [
-  {query: 'screen and (max-width: 39.99em)', columns: 1}, 
+  {query: 'screen and (max-width: 39.99em)', columns: 1},
   {query: 'screen and (min-width: 40em) and (max-width: 49.99em)', columns: 2},
   {query: 'screen and (min-width: 50em)', columns: 3}
 ]
@@ -253,7 +254,7 @@ quartz.update(2);
 ## Browser Support
 - Chrome
 - Firefox
-- IE 9+ 
+- IE 9+
 - Safari
 
 NOTE: IE 9 requires the provided matchMedia [polyfill](https://github.com/r-park/quartz/tree/master/dist)
