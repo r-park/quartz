@@ -226,6 +226,9 @@ Quartz.prototype = {
     if (liveColumn && liveColumn.className === this.columnClass) {
       testColumn.style.width = $window.getComputedStyle(liveColumn).width;
     }
+    else {
+      testColumn.style.width = this.container.offsetWidth / this.columnCount + 'px';
+    }
 
     return testColumn;
   },
