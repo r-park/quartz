@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/r-park/quartz.svg?branch=master)](https://travis-ci.org/r-park/quartz)
 [![Coverage Status](https://coveralls.io/repos/r-park/quartz/badge.svg?branch=master)](https://coveralls.io/r/r-park/quartz?branch=master)
 [![npm version](https://badge.fury.io/js/quartz-layout.svg)](http://badge.fury.io/js/quartz-layout)
+[![Bower version](https://badge.fury.io/bo/quartz.svg)](http://badge.fury.io/bo/quartz)
 
 # Quartz
 **<a href="http://r-park.github.io/quartz/" target="_blank">Quartz</a>** is a javascript utility for producing responsive **pinterest**-style layouts. Quartz prioritizes **balanced column heights** over strict item ordering.
