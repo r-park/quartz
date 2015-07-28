@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/r-park/quartz.svg?branch=master)](https://travis-ci.org/r-park/quartz)
-[![Coverage Status](https://coveralls.io/repos/r-park/quartz/badge.svg?branch=master)](https://coveralls.io/r/r-park/quartz?branch=master)
+[![Coverage Status](https://coveralls.io/repos/r-park/quartz/badge.svg?branch=master&service=github)](https://coveralls.io/github/r-park/quartz?branch=master)
 [![npm version](https://badge.fury.io/js/quartz-layout.svg)](http://badge.fury.io/js/quartz-layout)
 [![Bower version](https://badge.fury.io/bo/quartz.svg)](http://badge.fury.io/bo/quartz)
 
