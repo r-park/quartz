@@ -252,11 +252,16 @@ quartz.update();
 quartz.update(2);
 ```
 
-## Browser Support
-- Chrome
-- Firefox
-- IE 9+
-- Safari
+## Tested Browsers
+Vendor              | Version
+--------------------|--------------------
+Chrome              | 42
+Firefox             | 38
+Internet Explorer   | 9, 10, 11
+Safari              | 7.1, 8
+Android             | 4.1, 5.1
+iPhone              | 7.1, 8.1
+
 
 NOTE: IE 9 requires the provided matchMedia [polyfill](https://github.com/r-park/quartz/tree/master/dist)
 
