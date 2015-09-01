@@ -59,14 +59,14 @@ exports.customLaunchers = {
     platform: 'Linux',
     version: '5.1'
   },
-/*
+
   'SL_IOS_7.1': {
     base: 'SauceLabs',
     browserName: 'iphone',
     platform: 'OS X 10.10',
     version: '7.1'
   },
-*/
+
   'SL_IOS_8.1': {
     base: 'SauceLabs',
     browserName: 'iphone',
