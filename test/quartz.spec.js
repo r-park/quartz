@@ -589,7 +589,17 @@ describe('Quartz', function(){
 
     it('should bind to MediaQueryList for each media query in `config`', function(){
       fixture.load('container.html');
-      sinon.spy(window, 'matchMedia');
+
+      $window = { // eslint-disable-line no-undef, no-native-reassign
+        matchMedia: function() {
+          return {
+            addListener: function(){},
+            matches: true
+          };
+        }
+      };
+
+      sinon.spy($window, 'matchMedia');
 
       var configMediaQueries = config.mediaQueries;
       config.mediaQueries = null;
@@ -597,10 +607,10 @@ describe('Quartz', function(){
       var quartz = new Quartz(config);
       quartz.bindMediaQueries(configMediaQueries);
 
-      expect(window.matchMedia.callCount).toBe(3);
-      expect(window.matchMedia.getCall(0).args[0]).toBe(configMediaQueries[0].query);
-      expect(window.matchMedia.getCall(1).args[0]).toBe(configMediaQueries[1].query);
-      expect(window.matchMedia.getCall(2).args[0]).toBe(configMediaQueries[2].query);
+      expect($window.matchMedia.callCount).toBe(3);
+      expect($window.matchMedia.getCall(0).args[0]).toBe(configMediaQueries[0].query);
+      expect($window.matchMedia.getCall(1).args[0]).toBe(configMediaQueries[1].query);
+      expect($window.matchMedia.getCall(2).args[0]).toBe(configMediaQueries[2].query);
     });
 
     it('should call `update()` when listener is invoked with matching MediaQueryList', function(){
