@@ -8,6 +8,7 @@ env:
     - secure: rI9ZP86xxXDjuqDNg2AMzJm5haKgRTrYQx0ggA+mP4aF008T1ojxxBpUUE6vkUbCkcmJZsbIIVSvzpzZOUr7rP/Q39x4USyU5uEp1CFEhdwGDXProeIjvsyBWhIWUB3ojNbodZO8yRmkm+I3TpDEmbmXqr/5byY9YxnIOJd4MsNPdgD7/RePRbG+tdIVNBBPukt3Gg60eHyS8SSeIExbBT++F8O2dvTZL1fks6n8rV/36nOXP6fh7nrd6br1bhFG67fezXXF8m3sACUDZysur41hFNcdMwpMuVjs7ubHKypSuTxP1LxOwl7MhfKwbFtudTwIh2EM+AS89s8P0siRsbilb9YBcWRk20cL7DXFq+Spu+jIPn+7OE3CbQLeg8iEvO2vvCREouDbi1PweRCvI0MEM2+jVDs/T/0iivTFdituv2oUgPownSWTKRyAO5vtH3sAa+O7grPFc+hEiU+K9iOjkwt0P41W1ODWgw46hymvz9nLYjSqgBzHLI4LaOHj7bxSKWE/CL0Ek/f+HPPnvg9mG9zzma+Nb12+PD1SafzGrOohKR2pwbKCnDz+/vYPJNNI5QDKtDFcUE1XBv7Qc1KjPgZCFaPtYx8ry86WeOqi/ZgWJ3NSe6G/u80DOU1e6dW+S/spCtahINI5ZB13F7FS2/53IPrN2wtUm3XdUTY=
 
 install:
+  - npm -g bower
   - npm install
 
 script:

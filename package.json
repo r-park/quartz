@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "coveralls": "gulp coveralls",
+    "postinstall": "bower install",
     "test": "./node_modules/karma/bin/karma start --single-run --coverage"
   },
   "devDependencies": {
