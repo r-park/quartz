@@ -18,6 +18,7 @@ module.exports = function(config) {
       'node_modules/jquery/dist/jquery.min.js',
       'node_modules/sinon/pkg/sinon.js',
       'vendor/matchMedia/matchMedia.js',
+      'vendor/matchMedia/matchMedia.addListener.js',
       'src/quartz.js',
       'test/quartz.spec.js',
       'test/fixtures/*.html'
