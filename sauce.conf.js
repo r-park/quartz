@@ -10,14 +10,14 @@ exports.customLaunchers = {
     browserName: 'firefox',
     version: '38'
   },
-
+/*
   'SL_IE_9': {
     base: 'SauceLabs',
     browserName: 'internet explorer',
     platform: 'Windows 2008',
     version: '9'
   },
-
+*/
   'SL_IE_10': {
     base: 'SauceLabs',
     browserName: 'internet explorer',
@@ -59,14 +59,14 @@ exports.customLaunchers = {
     platform: 'Linux',
     version: '5.1'
   },
-
+/*
   'SL_IOS_7.1': {
     base: 'SauceLabs',
     browserName: 'iphone',
     platform: 'OS X 10.10',
     version: '7.1'
   },
-
+*/
   'SL_IOS_8.1': {
     base: 'SauceLabs',
     browserName: 'iphone',
