@@ -1,4 +1,7 @@
-describe("Quartz", function(){
+'use strict';
+/*global fixture, Quartz*/
+
+describe('Quartz', function(){
 
   var columnClass = 'column',
       columnSelector = '.' + columnClass,
@@ -75,8 +78,8 @@ describe("Quartz", function(){
   });
 
 
-  describe("Constructor", function(){
-    it("should accept container as CSS selector", function(){
+  describe('Constructor', function(){
+    it('should accept container as CSS selector', function(){
       fixture.load('container.html');
 
       var quartz = new Quartz(config);
@@ -85,7 +88,7 @@ describe("Quartz", function(){
       expect(quartz.container).toBe(getContainer());
     });
 
-    it("should accept container as {HTMLElement}", function(){
+    it('should accept container as {HTMLElement}', function(){
       fixture.load('container.html');
 
       config.container = getContainer();
@@ -95,7 +98,7 @@ describe("Quartz", function(){
       expect(quartz.container).toBe(config.container);
     });
 
-    it("should initialize successfully even when container is empty", function(){
+    it('should initialize successfully even when container is empty', function(){
       fixture.load('container.html');
 
       var quartz = new Quartz(config);
@@ -104,7 +107,7 @@ describe("Quartz", function(){
       expect(columns.length).toBe(quartz.columnCount);
     });
 
-    it("should accept items as CSS selector", function(){
+    it('should accept items as CSS selector', function(){
       fixture.load('container-with-items.html');
 
       config.items = itemSelector;
@@ -116,7 +119,7 @@ describe("Quartz", function(){
       expect(itemsMatch(quartz.items, items)).toBe(true);
     });
 
-    it("should accept items as {HTMLElement}", function(){
+    it('should accept items as {HTMLElement}', function(){
       fixture.load('container-with-items.html');
 
       config.items = fixture.el.querySelector(itemSelector);
@@ -127,7 +130,7 @@ describe("Quartz", function(){
       expect(itemsMatch(quartz.items, [config.items])).toBe(true);
     });
 
-    it("should accept items as {HTMLElement[]}", function(){
+    it('should accept items as {HTMLElement[]}', function(){
       fixture.load('container-with-items.html');
 
       var items = fixture.el.querySelectorAll(itemSelector);
@@ -140,7 +143,7 @@ describe("Quartz", function(){
       expect(itemsMatch(quartz.items, config.items)).toBe(true);
     });
 
-    it("should accept items as {jQuery}", function(){
+    it('should accept items as {jQuery}', function(){
       fixture.load('container-with-items.html');
 
       config.items = $(itemSelector);
@@ -151,7 +154,7 @@ describe("Quartz", function(){
       expect(itemsMatch(quartz.items, config.items)).toBe(true);
     });
 
-    it("should accept items as {NodeList}", function(){
+    it('should accept items as {NodeList}', function(){
       fixture.load('container-with-items.html');
 
       config.items = fixture.el.querySelectorAll(itemSelector);
@@ -162,7 +165,7 @@ describe("Quartz", function(){
       expect(itemsMatch(quartz.items, config.items)).toBe(true);
     });
 
-    it("should set `columnClass`", function(){
+    it('should set `columnClass`', function(){
       fixture.load('container-with-items.html');
 
       var quartz = new Quartz(config);
@@ -170,7 +173,7 @@ describe("Quartz", function(){
       expect(quartz.columnClass).toBe(config.columnClass);
     });
 
-    it("should set `columnCount`", function(){
+    it('should set `columnCount`', function(){
       fixture.load('container-with-items.html');
 
       var quartz = new Quartz(config);
@@ -178,7 +181,7 @@ describe("Quartz", function(){
       expect(quartz.columnCount > 0).toBe(true);
     });
 
-    it("should set `yIndices`", function(){
+    it('should set `yIndices`', function(){
       fixture.load('container-with-items.html');
 
       var quartz = new Quartz(config);
@@ -186,7 +189,7 @@ describe("Quartz", function(){
       expect(Array.isArray(quartz.yIndices)).toBe(true);
     });
 
-    it("should set `initialized`", function(){
+    it('should set `initialized`', function(){
       fixture.load('container-with-items.html');
 
       var quartz = new Quartz(config);
@@ -196,8 +199,8 @@ describe("Quartz", function(){
   });
 
 
-  describe("Appending items", function(){
-    it("should append item to layout", function(){
+  describe('Appending items', function(){
+    it('should append item to layout', function(){
       fixture.load('container-with-items-styled.html');
 
       config.mediaQueries = null; // null to force columnCount to be config.columnCount
@@ -212,7 +215,7 @@ describe("Quartz", function(){
       expect(columns[2].lastChild).toBe(item);
     });
 
-    it("should append multiple {HTMLElement[]} items to layout", function(){
+    it('should append multiple {HTMLElement[]} items to layout', function(){
       fixture.load('container-with-items-styled.html');
 
       config.mediaQueries = null; // null to force columnCount to be config.columnCount
@@ -236,7 +239,7 @@ describe("Quartz", function(){
       expect(items[3]).toBe(columns[1].lastChild);
     });
 
-    it("should append multiple {NodeList} items to layout", function(){
+    it('should append multiple {NodeList} items to layout', function(){
       fixture.load('container-with-items-styled.html');
 
       config.mediaQueries = null; // null to force columnCount to be config.columnCount
@@ -264,7 +267,7 @@ describe("Quartz", function(){
       expect(items[3]).toBe(columns[1].lastChild);
     });
 
-    it("should append item to empty layout", function(){
+    it('should append item to empty layout', function(){
       fixture.load('container.html');
 
       var quartz = new Quartz(config);
@@ -278,8 +281,8 @@ describe("Quartz", function(){
   });
 
 
-  describe("Prepending items", function(){
-    it("should prepend item to layout", function(){
+  describe('Prepending items', function(){
+    it('should prepend item to layout', function(){
       fixture.load('container-with-items-styled.html');
 
       config.mediaQueries = null; // null to force columnCount to be config.columnCount
@@ -299,7 +302,7 @@ describe("Quartz", function(){
       expect(items[2]).toBe(columns[0].lastChild);
     });
 
-    it("should prepend multiple {HTMLElement[]} items to layout", function(){
+    it('should prepend multiple {HTMLElement[]} items to layout', function(){
       fixture.load('container-with-items-styled.html');
 
       config.mediaQueries = null; // null to force columnCount to be config.columnCount
@@ -329,7 +332,7 @@ describe("Quartz", function(){
       expect(liveItems[2]).toBe(columns[1].lastChild);
     });
 
-    it("should prepend multiple {NodeList} items to layout", function(){
+    it('should prepend multiple {NodeList} items to layout', function(){
       fixture.load('container-with-items-styled.html');
 
       config.mediaQueries = null; // null to force columnCount to be config.columnCount
@@ -362,7 +365,7 @@ describe("Quartz", function(){
       expect(liveItems[2]).toBe(columns[1].lastChild);
     });
 
-    it("should prepend item to empty layout", function(){
+    it('should prepend item to empty layout', function(){
       fixture.load('container.html');
 
       var quartz = new Quartz(config);
@@ -377,8 +380,8 @@ describe("Quartz", function(){
   });
 
 
-  describe("Removing items", function(){
-    it("should remove the provided item from layout", function(){
+  describe('Removing items', function(){
+    it('should remove the provided item from layout', function(){
       fixture.load('container-with-items.html');
 
       var quartz = new Quartz(config);
@@ -391,7 +394,7 @@ describe("Quartz", function(){
       expect(quartz.container.querySelector('#item-2')).toBe(null);
     });
 
-    it("should remove multiple {NodeList} items from layout", function(){
+    it('should remove multiple {NodeList} items from layout', function(){
       fixture.load('container-with-items.html');
 
       var quartz = new Quartz(config);
@@ -404,7 +407,7 @@ describe("Quartz", function(){
       expect(quartz.container.querySelectorAll('.js-bulk-remove').length).toBe(0);
     });
 
-    it("should remove multiple {HTMLElement[]} items from layout", function(){
+    it('should remove multiple {HTMLElement[]} items from layout', function(){
       fixture.load('container-with-items.html');
 
       var quartz = new Quartz(config);
@@ -418,7 +421,7 @@ describe("Quartz", function(){
       expect(quartz.container.querySelectorAll('.js-bulk-remove').length).toBe(0);
     });
 
-    it("should call `update()`", function(){
+    it('should call `update()`', function(){
       fixture.load('container-with-items.html');
 
       var quartz = new Quartz(config);
@@ -432,8 +435,8 @@ describe("Quartz", function(){
   });
 
 
-  describe("Removing all items", function(){
-    it("should remove all items from internal `items` collection", function(){
+  describe('Removing all items', function(){
+    it('should remove all items from internal `items` collection', function(){
       fixture.load('container-with-items.html');
 
       var quartz = new Quartz(config);
@@ -442,7 +445,7 @@ describe("Quartz", function(){
       expect(quartz.items.length).toBe(0);
     });
 
-    it("should remove all items from layout", function(){
+    it('should remove all items from layout', function(){
       fixture.load('container-with-items.html');
 
       var quartz = new Quartz(config);
@@ -451,7 +454,7 @@ describe("Quartz", function(){
       expect(quartz.container.querySelectorAll(itemSelector).length).toBe(0);
     });
 
-    it("should call `update()`", function(){
+    it('should call `update()`', function(){
       fixture.load('container-with-items.html');
 
       var quartz = new Quartz(config);
@@ -465,8 +468,8 @@ describe("Quartz", function(){
   });
 
 
-  describe("Updating layout", function(){
-    it("should update layout with new column count", function(){
+  describe('Updating layout', function(){
+    it('should update layout with new column count', function(){
       fixture.load('container.html');
 
       var quartz = new Quartz(config);
@@ -482,9 +485,9 @@ describe("Quartz", function(){
   });
 
 
-  describe("Indices", function(){
-    describe("yIndices", function(){
-      it("should initialize with zero value for each column", function(){
+  describe('Indices', function(){
+    describe('yIndices', function(){
+      it('should initialize with zero value for each column', function(){
         fixture.load('container.html');
 
         var quartz = new Quartz(config);
@@ -494,29 +497,29 @@ describe("Quartz", function(){
       });
     });
 
-    describe("getColumnIndex()", function(){
-      it("should return the column index that has the lowest y-index", function(){
+    describe('getColumnIndex()', function(){
+      it('should return the column index that has the lowest y-index', function(){
         fixture.load('container.html');
 
         var quartz = new Quartz(config); // [0,0,0]
         expect(quartz.getColumnIndex()).toBe(0);
 
-        quartz.yIndices = [10,0,0];
+        quartz.yIndices = [10, 0, 0];
         expect(quartz.getColumnIndex()).toBe(1);
 
-        quartz.yIndices = [10,0,10];
+        quartz.yIndices = [10, 0, 10];
         expect(quartz.getColumnIndex()).toBe(1);
 
-        quartz.yIndices = [10,20,10];
+        quartz.yIndices = [10, 20, 10];
         expect(quartz.getColumnIndex()).toBe(0);
 
-        quartz.yIndices = [30,20,10];
+        quartz.yIndices = [30, 20, 10];
         expect(quartz.getColumnIndex()).toBe(2);
       });
     });
 
-    describe("refreshYIndices()", function(){
-      it("should update indices by querying heights of live columns", function(){
+    describe('refreshYIndices()', function(){
+      it('should update indices by querying heights of live columns', function(){
         fixture.load('container.html');
 
         config.mediaQueries = null; // null to force columnCount to be config.columnCount
@@ -524,44 +527,44 @@ describe("Quartz", function(){
         var quartz = new Quartz(config);
         var columns = quartz.container.querySelectorAll(columnSelector);
 
-        expect(quartz.yIndices).toEqual([0,0,0]);
+        expect(quartz.yIndices).toEqual([0, 0, 0]);
 
         columns[0].appendChild(createItem());
         quartz.refreshYIndices();
 
-        expect(quartz.yIndices).toEqual([10,0,0]);
+        expect(quartz.yIndices).toEqual([10, 0, 0]);
 
         columns[0].appendChild(createItem());
         columns[2].appendChild(createItem());
         quartz.refreshYIndices();
 
-        expect(quartz.yIndices).toEqual([20,0,10]);
+        expect(quartz.yIndices).toEqual([20, 0, 10]);
 
         columns[1].appendChild(createItem(40));
         quartz.refreshYIndices();
 
-        expect(quartz.yIndices).toEqual([20,40,10]);
+        expect(quartz.yIndices).toEqual([20, 40, 10]);
       });
     });
 
-    describe("resetYIndices()", function(){
-      it("should set all indices to zero", function(){
+    describe('resetYIndices()', function(){
+      it('should set all indices to zero', function(){
         fixture.load('container.html');
 
         config.mediaQueries = null; // null to force columnCount to be config.columnCount
 
         var quartz = new Quartz(config);
-        quartz.yIndices = [10,20,30];
+        quartz.yIndices = [10, 20, 30];
         quartz.resetYIndices();
 
-        expect(quartz.yIndices).toEqual([0,0,0]);
+        expect(quartz.yIndices).toEqual([0, 0, 0]);
       });
     });
   });
 
 
-  describe("Binding to MediaQueryList notifications", function(){
-    it("binding handler should be called by constructor when media queries are provided", function(){
+  describe('Binding to MediaQueryList notifications', function(){
+    it('binding handler should be called by constructor when media queries are provided', function(){
       fixture.load('container.html');
       sinon.spy(Quartz.prototype, 'bindMediaQueries');
 
@@ -572,7 +575,7 @@ describe("Quartz", function(){
       Quartz.prototype.bindMediaQueries.restore();
     });
 
-    it("binding handler should NOT be called by constructor when media queries are not provided", function(){
+    it('binding handler should NOT be called by constructor when media queries are not provided', function(){
       fixture.load('container.html');
       sinon.spy(Quartz.prototype, 'bindMediaQueries');
 
@@ -584,7 +587,7 @@ describe("Quartz", function(){
       Quartz.prototype.bindMediaQueries.restore();
     });
 
-    it("should bind to MediaQueryList for each media query in `config`", function(){
+    it('should bind to MediaQueryList for each media query in `config`', function(){
       fixture.load('container.html');
       sinon.spy(window, 'matchMedia');
 
@@ -600,7 +603,7 @@ describe("Quartz", function(){
       expect(window.matchMedia.getCall(2).args[0]).toBe(configMediaQueries[2].query);
     });
 
-    it("should call `update()` when listener is invoked with matching MediaQueryList", function(){
+    it('should call `update()` when listener is invoked with matching MediaQueryList', function(){
       fixture.load('container.html');
 
       config.mediaQueries = null;
@@ -609,7 +612,7 @@ describe("Quartz", function(){
 
       sinon.spy(quartz, 'update');
 
-      $window = {
+      $window = { // eslint-disable-line no-undef, no-native-reassign
         matchMedia: function() {
           return {
             addListener: function(){},
@@ -623,7 +626,7 @@ describe("Quartz", function(){
       expect(quartz.update.calledOnce).toBe(true);
     });
 
-    it("should call `update()` with new column count", function(){
+    it('should call `update()` with new column count', function(){
       fixture.load('container.html');
 
       config.mediaQueries = null;
@@ -632,7 +635,7 @@ describe("Quartz", function(){
 
       sinon.spy(quartz, 'update');
 
-      $window = {
+      $window = { // eslint-disable-line no-undef, no-native-reassign
         matchMedia: function() {
           return {
             addListener: function(){},
