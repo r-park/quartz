@@ -1,0 +1,135 @@
+@import
+"settings",
+"../node_modules/sass-lib/src/settings",
+"../node_modules/sass-lib/src/functions/em",
+"../node_modules/sass-lib/src/functions/rem",
+"../node_modules/sass-lib/src/functions/strip-unit",
+"../node_modules/sass-lib/src/mixins/buttons",
+"../node_modules/sass-lib/src/mixins/clearfix",
+"../node_modules/sass-lib/src/mixins/font-feature-settings",
+"../node_modules/sass-lib/src/mixins/font-smoothing",
+"../node_modules/sass-lib/src/mixins/grid",
+"../node_modules/sass-lib/src/mixins/media-query",
+"../node_modules/sass-lib/src/mixins/selection",
+"../node_modules/sass-lib/src/mixins/widths",
+"../node_modules/sass-lib/src/base/reset",
+"../node_modules/sass-lib/src/elements/html",
+"../node_modules/sass-lib/src/elements/body",
+"../node_modules/sass-lib/src/elements/button",
+"../node_modules/sass-lib/src/elements/img";
+
+
+.header {
+  position: fixed;
+  z-index: 100;
+  padding: 30px 0;
+  width: 100%;
+  background: #fff;
+}
+
+
+.header__button {
+  float: left;
+  margin-right: 1em;
+  border: 2px solid #2b3d70;
+  padding: 0 2em;
+  font-size: em(12px);
+  line-height: (30px / 12px);
+  text-transform: uppercase;
+  color: #2b3d70;
+
+  &:hover {
+    //border-color: #2b3d70;
+    color: #fff;
+    background: #2b3d70;
+  }
+}
+
+
+main {
+  padding: 154px 0 500px;
+}
+
+
+.container {
+  @include grid-row;
+}
+
+
+.column {
+  @include grid-column;
+  width: 100%;
+}
+
+
+.items__column {
+  @include media-query(medium) {
+    width: grid-column-width(1, 2);
+  }
+
+  @include media-query(large) {
+    width: grid-column-width(1, 3);
+  }
+}
+
+
+.item {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 1.4em 1.5em 2em;
+  color: #fff;
+  background: #2C395C;
+
+  transition: all 300ms ease-in-out;
+
+  -webkit-box-shadow: 4px 4px 0 1px rgba(0,0,0,0.08);
+  -moz-box-shadow: 4px 4px 0 1px rgba(0,0,0,0.08);
+  box-shadow: 4px 4px 0 1px rgba(0,0,0,0.08);
+
+  &:hover {
+    background: #2b3d70;
+
+    .item__button {
+      opacity: 1;
+    }
+  }
+}
+
+.item__button {
+  position: absolute;
+  top: .65em;
+  right: 1em;
+  border: 0;
+  padding: 0;
+  font-size: em(24px);
+  color: #fff;
+  opacity: 0;
+  transition: all 100ms ease-in-out;
+}
+
+.item__text {
+  font-weight: 300;
+  opacity: .9;
+}
+
+.item__title {
+  margin-bottom: .5em;
+  font-size: em(32px);
+  font-weight: 500;
+  line-height: 1;
+}
+
+
+.btn {
+  @include button-base;
+  background-color: transparent;
+}
+
+
+.btn--octocat {
+  float: right;
+  width: 32px;
+  height: 32px;
+  background-image: url('octocat.svg');
+  background-repeat: no-repeat;
+}

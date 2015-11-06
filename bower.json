@@ -1,37 +1,13 @@
 {
-  "name": "quartz",
-  "version": "0.1.11",
-  "description": "Responsive pinterest-style layouts with balanced column heights.",
-  "homepage": "https://github.com/r-park/quartz",
-  "repository": "https://github.com/r-park/quartz.git",
+  "name": "quartz-layout--gh-pages",
+  "version": "0.1.0",
   "author": "Richard Park",
-  "license": "MIT",
+
+  "private": true,
+
   "dependencies": {
-    "matchMedia": "*"
-  },
-  "ignore": [
-    "node_modules",
-    "src",
-    "target",
-    "test",
-    "tmp",
-    "vendor",
-    "**/.*",
-    "gulpfile.js",
-    "karma.conf.js",
-    "package.json"
-  ],
-  "keywords": [
-    "quartz",
-    "columns",
-    "layout",
-    "masonry",
-    "responsive",
-    "salvattore"
-  ],
-  "moduleType": [
-    "amd",
-    "globals",
-    "node"
-  ]
+    "imagesready": "*",
+    "jquery": "*",
+    "quartz": "*"
+  }
 }

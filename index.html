@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Quartz</title>
+
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+
+
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="column u-clear">
+        <button class="header__button btn" onclick="demo.append();" type="button">Append</button>
+        <button class="header__button btn" onclick="demo.prepend();" type="button">Prepend</button>
+        <button class="header__button btn" onclick="demo.removeAll();" type="button">Remove all</button>
+        <a class="btn btn--octocat" href="https://github.com/r-park/quartz"></a>
+      </div>
+    </div>
+  </header>
+
+
+  <main>
+    <div class="items container">
+      <article class="item">
+        <h1 class="item__title">1</h1>
+        <button class="item__button btn" onclick="demo.remove(this.parentNode);" type="button">×</button>
+        <p class="item__text">I think these things are pretty safe.</p>
+      </article>
+
+      <article class="item">
+        <h1 class="item__title">2</h1>
+        <button class="item__button btn" onclick="demo.remove(this.parentNode);" type="button">×</button>
+        <p class="item__text">We are traveling at warp speed. How did you manage to beam aboard this ship?</p>
+      </article>
+
+      <article class="item">
+        <h1 class="item__title">3</h1>
+        <button class="item__button btn" onclick="demo.remove(this.parentNode);" type="button">×</button>
+        <p class="item__text">Well, that's brilliant. Do they still have sandwiches there?</p>
+      </article>
+
+      <article class="item">
+        <h1 class="item__title">4</h1>
+        <button class="item__button btn" onclick="demo.remove(this.parentNode);" type="button">×</button>
+        <p class="item__text">Don't pander to me, kid. One tiny crack in the hull and our blood boils in thirteen seconds. Solar flare might crop up, cook us in our seats. And wait'll you're sitting pretty with a case of Andorian shingles, see if you're still so relaxed when your eyeballs are bleeding. Space is disease and danger wrapped in darkness and silence.</p>
+      </article>
+
+      <article class="item">
+        <h1 class="item__title">5</h1>
+        <button class="item__button btn" onclick="demo.remove(this.parentNode);" type="button">×</button>
+        <p class="item__text">What if I told you that your transwarp theory was correct, that it is indeed possible to beam onto a ship that is traveling at warp speed?</p>
+      </article>
+
+      <article class="item">
+        <h1 class="item__title">6</h1>
+        <button class="item__button btn" onclick="demo.remove(this.parentNode);" type="button">×</button>
+        <p class="item__text">Permission to speak freely, sir?</p>
+      </article>
+
+      <article class="item">
+        <h1 class="item__title">7</h1>
+        <button class="item__button btn" onclick="demo.remove(this.parentNode);" type="button">×</button>
+        <p class="item__text">Green-blooded hobgoblin.</p>
+      </article>
+    </div>
+  </main>
+
+
+
+  <!--[if lt IE 10]>
+  <script src="assets/quartz/dist/match-media.min.js"></script>
+  <![endif]-->
+  <script src="assets/quartz/dist/quartz.min.js"></script>
+  <script src="assets/demo.js"></script>
+
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-64158810-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>
